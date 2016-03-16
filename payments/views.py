@@ -1,10 +1,22 @@
 from django.shortcuts import render
-from payments.models import Providers, Categorie
+from payments.models import Providers, Category
 
 
 def provider_list(request):
-    p = Providers.objects.all()
-    c = Categorie.objects.all()
+    provider_list = Providers.objects.all()
+    category_list = Category.objects.order_by('title')
     return render(request, 'providers_list.html', {
-        'provider': p, 'categorie': c,
+        'provider': provider_list, 'category': category_list,
+    })
+
+
+def category_list(request, slug):
+    if 'all' in slug:
+        provider_list = Providers.objects.all()
+    else:
+        category = Category.objects.get(slug=slug)
+        provider_list = Providers.objects.filter(category=category)
+    category_list = Category.objects.order_by('-title')
+    return render(request, 'providers_list.html', {
+        'provider': provider_list, 'category': category_list,
     })

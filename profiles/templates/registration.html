@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+.form-signin {
+    max-width: 350px;
+    padding: 15px;
+    margin: 0 auto;
+}
+</style>
+    <div class="container">
+
+      <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">Заполните все поля:</h2>
+        <input type="text" class="form-control" placeholder="Имя" required autofocus>
+        <br>
+        <input type="email" class="form-control" placeholder="Email адресс" required autofocus>
+        <br>
+        <input type="password" class="form-control" placeholder="Пароль" required>
+        <br>
+        <input type="password" class="form-control" placeholder="Повторите пароль" required>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}
