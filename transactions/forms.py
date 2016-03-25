@@ -7,11 +7,17 @@ import random
 class TransactionForm(forms.ModelForm):
     class Meta():
         model = Transactions
-        exclude = {
-            'number',
+        fields = {
+            'amount',
+            'props',
         }
 
-    def save(self, commit=True):
+        widgets = {
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Минимум 5сом'}),
+            'props': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Лицевой счет'}),
+        }
+
+    def save(self, commit=True, u='', p=''):
         transaction = super(TransactionForm, self).save(commit=False)
         max_try = 100
         not_unique_number = True
@@ -23,16 +29,12 @@ class TransactionForm(forms.ModelForm):
             if Transactions.objects.filter(number=number_gen).count() == 0:
                 not_unique_number = False
             max_try -= 1
-        transaction.number = int(number_gen)
         if commit:
-            transaction.save()
+            Transactions.objects.create(
+                user_id=u,
+                provider_id=p,
+                number=number_gen,
+                amount=transaction.amount,
+                props=transaction.props
+            )
         return transaction
-
-
-# number = models.IntegerField(u'Номер транзакции', unique=True)
-# user = models.ForeignKey(Profile, verbose_name='Л/С пользователя')
-# provider = models.ForeignKey(Providers, verbose_name='Л/С провайдера')
-# status = models.CharField('Статус транзакции', max_length=50, choices=STATUS_SHOICES)
-# amount = models.IntegerField(u'Сумма платежа')
-# create_at = models.DateTimeField(auto_now_add=True)
-# props

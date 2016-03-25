@@ -14,39 +14,34 @@
             <li><a href="{% url 'profile' %}">Настройки</a></li>
           </ul>
         </div>
-        <div class="col-md-9">
-          <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
-            <div class="row">
-              <div class="col-lg-10 col-md-7 col-sm-12">
-                <div class="panel panel-default">
-                  <table class="table table-striped">
-                    <tr>
-                        <td>Транзакции №</td>
-                        <td>Провайдер</td>
-                        <td>Дата транзакции</td>
-                        <td>Статус</td>
-                        <td>Сумма</td>
-                        <td>Реквизит</td>
-                    </tr>
-                    {% for pay in payments %}
-                    <tr>
-                        <td>{{ pay.number }}</td>
-                        <td>{{ pay.provider_id }}</td>
-                        <td>{{ pay.create_at }}</td>
-                        <td>{{ pay.get_status_display }}</td>
-                        <td>{{ pay.amount }}</td>
-                        <td>{{ pay.props }}</td>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                  </table>
-                </div>
-              </div>
-              <div class="col-lg-2 col-md-5 col-sm-12 well">
-                <p>Здесь фильтры</p>
-              </div>
-            </div>
-          </form>
+        <div class="col-lg-8 col-md-7 col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Полный список ваших оплат</div>
+            <table class="table table-striped">
+              <tr>
+                  <td>Дата транзакции</td>
+                  <td>Провайдер</td>
+                  <td>Сумма</td>
+                  <td>Реквизит</td>
+                  <td>Чек №</td>
+                  <td>Статус</td>
+              </tr>
+              {% for pay in payments %}
+              <tr>
+                  <td>{{ pay.create_at }}</td>
+                  <td>{{ pay }}</td>
+                  <td>{{ pay.amount }}</td>
+                  <td>{{ pay.props }}</td>
+                  <td>{{ pay.number }}</td>
+                  <td>{{ pay.get_status_display }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-5 col-sm-12 well">
+          <p>Здесь фильтры:</p>
+          <p>Если ты их не видишь, значит ты гей! <img src="https://vk.com/images/emoji/D83DDE04.png" alt=""></p>
         </div>
       </div>
       <!-- Тут идет блок для контента -->      

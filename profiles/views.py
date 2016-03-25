@@ -2,8 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login
 from models import Profile
-from forms import ProfileForm, RegistrationForm, UserAuthenticationForm, HistoryForm
-from django.contrib.auth.models import User
+from forms import ProfileForm, RegistrationForm, UserAuthenticationForm
 from transactions.models import Transactions
 
 
@@ -42,7 +41,7 @@ def registration(request):
 
 
 def my_payments(request):
-    payments = Transactions.objects.filter(user_id=request.user.profile.account)
+    payments = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
     return render(request, 'my_payments.html', {
         'payments': payments,
     })

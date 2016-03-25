@@ -4,7 +4,6 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 import random
-from transactions.models import Transactions
 
 
 class RegistrationForm(UserCreationForm):
@@ -93,12 +92,4 @@ class UserAuthenticationForm(AuthenticationForm):
         fields = (
             'username',
             'password',
-        )
-
-
-class HistoryForm(forms.ModelForm):
-    class Meta:
-        model = Transactions
-        exclude = (
-            'number',
         )

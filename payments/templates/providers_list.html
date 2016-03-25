@@ -28,7 +28,7 @@
                   <h3>{{ prov.name }}</h3>
                   <p>{{ prov.description }}</p>
                   <div class="btn-group" role="group" aria-label="...">
-                    <a href="{% url 'payment_page' prov.id %}" class="btn btn-primary">Оплатить</a>
+                    <a href="{% url 'pay' prov.id %}" class="btn btn-primary">Оплатить</a>
                     <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> в закладки</a>
                   </div>
                 </div>

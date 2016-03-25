@@ -6,25 +6,47 @@
       <h3>Оплата услуг <small>{{prov.name}}</small></h3>
       <hr>
       <div class="row">
-        <div class="col-md-3">
-          <div class="thumbnail">
-            <img src="{{ prov.img.url }}">
-          </div>
-        </div>
-        <div class="col-md-9">
-          <form method="POST">
-            <div class="row">
-              <div class="col-lg-8 col-md-6 col-sm-12">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <form method="POST" action="{% url 'pay' prov.id %}">
                 {% csrf_token %}
                 {{ form }}
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <p>Л/С пользователя: {{ user.profile.account }}</p>
-                <p>Ваш баланс: {{ user.profile.balance }}</p>
-            </div>
+                <h4>Ваш баланс: {{ request.user.profile.balance }}</h4> 
+                <hr>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
+            <p>{{ message }}</p>
           </form>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <div class="row">
+            <div class="col-lg-8">
+              <p>{{ prov.description }}</p>
+              <p>В дескрипшн можно кидать урлы на сайт провайдера и еще че нить</p>
+            </div>
+            <div class="thumbnail col-lg-4">
+              <img src="{{ prov.img.url }}">
+            </div>
+          </div>
+          <div class="row panel panel-primary">
+            <div class="panel-heading">Предыдущие оплаты данной услуги:</div>
+            <table class="table table-striped">
+              <tr>
+                  <td>Дата транзакции</td>
+                  <td>Реквизит</td>
+                  <td>Сумма</td>
+                  <td>Статус</td>
+                  <td>Чек №</td>
+              </tr>
+              {% for pay in payments %}
+              <tr>
+                  <td>{{ pay.create_at }}</td>
+                  <td>{{ pay.props }}</td>
+                  <td>{{ pay.amount }}</td>
+                  <td>{{ pay.get_status_display }}</td>
+                  <td>{{ pay.number }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
         </div>
       </div>
       <!-- Тут идет блок для контента -->      
