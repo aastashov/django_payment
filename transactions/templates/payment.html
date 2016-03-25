@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" style="padding-top:60px;">
+      <!-- Тут идет блок для контента -->
+      <h3>Оплата услуг <small>{{prov.name}}</small></h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="thumbnail">
+            <img src="{{ prov.img.url }}">
+          </div>
+        </div>
+        <div class="col-md-9">
+          <form method="POST">
+            <div class="row">
+              <div class="col-lg-8 col-md-6 col-sm-12">
+                {% csrf_token %}
+                {{ form }}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <p>Л/С пользователя: {{ user.profile.account }}</p>
+                <p>Ваш баланс: {{ user.profile.balance }}</p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+    </div>
+{% endblock %}

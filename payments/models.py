@@ -18,7 +18,7 @@ class Providers(models.Model):
     account = models.IntegerField(u'Л/С провайдера', unique=True)
     description = models.TextField(u'О провайдере')
     display = models.BooleanField(u'Включить/Отключить', default=False)
-    category = models.ForeignKey(Category)
+    category = models.ForeignKey(Category, verbose_name='Категорияы')
 
     def __unicode__(self):
         return self.name

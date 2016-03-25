@@ -5,13 +5,14 @@ from payments.models import Providers
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User)
-    first_name = models.CharField(u'Имя пользователя', max_length=100)
-    last_name = models.CharField(u'Фамилия пользователя', max_length=100)
+    user = models.OneToOneField(User, verbose_name='Пользователь')
+    first_name = models.CharField(u'Имя пользователя', max_length=100, blank=True)
+    last_name = models.CharField(u'Фамилия пользователя', max_length=100, blank=True)
     account = models.IntegerField(u'Л/С пользователя', unique=True)
     balance = models.CharField(u'Баланс', max_length=250)
-    avatar = models.ImageField(u'Аватар пользователя', upload_to='media/image/uploads_avatar', blank=True, null=True)
-    bookmarks = models.ManyToManyField(Providers)
+    avatar = models.ImageField(u'Аватар пользователя', upload_to='media/image/uploads_avatar', blank=True)
+    bookmarks = models.ManyToManyField(Providers, blank=True)
+    phone = models.CharField(u'Номер абонента', max_length=13, blank=True)
 
     def __unicode__(self):
         return self.user.username

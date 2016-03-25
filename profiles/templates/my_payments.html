@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" style="padding-top:60px;">
+      <!-- Тут идет блок для контента -->
+      <h3>Список транзакций</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="{% url 'my_payments' %}">Мои платежи</a></li>
+            <li><a href="#">Категории услуг</a></li>
+            <li><a href="{% url 'category' 'all' %}">Провайдеры</a></li>
+            <li><a href="{% url 'profile' %}">Настройки</a></li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-lg-10 col-md-7 col-sm-12">
+                <div class="panel panel-default">
+                  <table class="table table-striped">
+                    <tr>
+                        <td>Транзакции №</td>
+                        <td>Провайдер</td>
+                        <td>Дата транзакции</td>
+                        <td>Статус</td>
+                        <td>Сумма</td>
+                        <td>Реквизит</td>
+                    </tr>
+                    {% for pay in payments %}
+                    <tr>
+                        <td>{{ pay.number }}</td>
+                        <td>{{ pay.provider_id }}</td>
+                        <td>{{ pay.create_at }}</td>
+                        <td>{{ pay.get_status_display }}</td>
+                        <td>{{ pay.amount }}</td>
+                        <td>{{ pay.props }}</td>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-5 col-sm-12 well">
+                <p>Здесь фильтры</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+    </div>
+{% endblock %}

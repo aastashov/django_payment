@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from payments.models import Providers, Category
+from models import Providers, Category
 
 
 def provider_list(request):
@@ -16,7 +16,7 @@ def category_list(request, slug):
     else:
         category = Category.objects.get(slug=slug)
         provider_list = Providers.objects.filter(category=category)
-    category_list = Category.objects.order_by('-title')
+    category_list = Category.objects.order_by('title')
     return render(request, 'providers_list.html', {
         'provider': provider_list, 'category': category_list,
     })

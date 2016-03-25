@@ -6,46 +6,52 @@
       <h3>Личный кабинет</h3>
       <hr>
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <ul class="nav nav-pills nav-stacked">
-            <li><a href="#">Мои платежи</a></li>
+            <li><a href="{% url 'my_payments' %}">Мои платежи</a></li>
             <li><a href="#">Категории услуг</a></li>
             <li><a href="{% url 'category' 'all' %}">Провайдеры</a></li>
-            <li><a href="#">История</a></li>
             <li><a href="{% url 'profile' %}">Настройки</a></li>
           </ul>
         </div>
         <div class="col-md-9">
-          <div class="row">
-            <div class="col-lg-8 col-md-6 col-sm-12">
-            <form method="GET">
-              <h4>Имя ползователя:</h4>
-              <input type="text" class="form-control" placeholder="Иван" value="{{ user.profile.first_name }}">
-              <hr>
-              <h4>Фамилия пользователя:</h4>
-              <input type="text" class="form-control" placeholder="Иванов" value="{{ user.profile.last_name }}">
-              <hr>
-              <h4>Email:</h4>
-              <input type="email" class="form-control" placeholder="Text input" value="{{ user.email }}">
-              <hr>
-              <h4>Изменить пароль:</h4>
-                <input type="password" class="form-control" placeholder="Старый пароль">
-                <br>
-                <input type="password" class="form-control" placeholder="Новый пароль">
-                <br>
-                <input type="password" class="form-control" placeholder="Повторите пароль">
-              <hr>
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить измнения</button>
-            </form>
+          <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-lg-8 col-md-6 col-sm-12">
+                {% csrf_token %}
+               <h4>Имя ползователя:</h4>
+                  {{ form.first_name }}
+                <hr>
+                  <h4>Фамилия пользователя:</h4>
+                  {{ form.last_name }}
+                <hr>
+                  <h4>Номер телефона:</h4>
+                  {{ form.phone }}
+                <hr>
+                <!--<h4>Изменить пароль:</h4>
+                  <input type="password" name="pass" class="form-control" placeholder="Старый пароль">
+                  <br>
+                  <input type="password" name="pass1" class="form-control" placeholder="Новый пароль">
+                  <br>
+                  <input type="password" name="pass2" class="form-control" placeholder="Повторите пароль">
+                <hr>-->
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить измнения</button>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <p>Л/С пользователя: {{ user.profile.account }}</p>
                 <p>Ваш баланс: {{ user.profile.balance }}</p>
-              <div class="thumbnail">
-                <img src="{{ user.profile.avatar.url }}" alt="{{ user.profile.avatar.url }}">
+                <div class="thumbnail">
+                  {% if user.profile.avatar %}
+                  <img src="{{ user.profile.avatar.url }}">
+                  {% else %}
+                  <img src="http://localhost:8000/media/media/image/uploads_avatar/user.jpg">
+                  {% endif %}
+                    {{ form.avatar.errors }}
+                    {{ form.avatar }}
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       <!-- Тут идет блок для контента -->      
