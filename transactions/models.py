@@ -13,7 +13,7 @@ STATUS_SHOICES = (
 
 
 class Transactions(models.Model):
-    number = models.IntegerField(u'Номер транзакции', unique=True)
+    number = models.IntegerField(u'Номер транзакции', unique=True, editable=False, blank=True)
     user = models.ForeignKey(Profile, verbose_name='Л/С пользователя', to_field='account')
     provider = models.ForeignKey(Providers, verbose_name='Л/С провайдера', to_field='account')
     status = models.CharField('Статус транзакции', max_length=50, default='wait', choices=STATUS_SHOICES)
@@ -25,7 +25,7 @@ class Transactions(models.Model):
         max_try = 100
         not_unique_number = True
         while not_unique_number:
-            self.number = 1000 + random.randint(100, 999)
+            self.number = 1000 + random.randint(0, 9999)
             if max_try == 0:
                 # Send email to admin
                 break

@@ -1,5 +1,6 @@
 # coding: utf-8
 from django.db import models
+import random
 
 
 class Category(models.Model):
@@ -15,10 +16,23 @@ class Category(models.Model):
 class Providers(models.Model):
     name = models.CharField(u'Имя провайдера', max_length=20)
     img = models.ImageField(u'Лого', upload_to='media/image/uploads_provider/')
-    account = models.IntegerField(u'Л/С провайдера', unique=True)
+    account = models.IntegerField(u'Л/С провайдера', unique=True, editable=False, blank=True)
     description = models.TextField(u'О провайдере')
     display = models.BooleanField(u'Включить/Отключить', default=False)
     category = models.ForeignKey(Category, verbose_name='Категорияы')
+
+    def save(self):
+        max_try = 100
+        not_unique_number = True
+        while not_unique_number:
+            self.account = random.randint(100, 999)
+            if max_try == 0:
+                # Send email to admin
+                break
+            if Providers.objects.filter(account=self.account).count() == 0:
+                not_unique_number = False
+            max_try -= 1
+        super(Providers, self).save()
 
     def __unicode__(self):
         return self.name

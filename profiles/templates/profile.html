@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container" style="padding-top:60px;">
       <!-- Тут идет блок для контента -->
       <h3>Личный кабинет</h3>
       <hr>
       <div class="row">
         <div class="col-md-2">
-          <ul class="nav nav-pills nav-stacked">
-            <li><a href="{% url 'my_payments' %}">Мои платежи</a></li>
-            <li><a href="#">Категории услуг</a></li>
-            <li><a href="{% url 'category' 'all' %}">Провайдеры</a></li>
-            <li><a href="{% url 'profile' %}">Настройки</a></li>
-          </ul>
+          {% include 'sidebar.html' %}
         </div>
         <div class="col-md-9">
           <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
@@ -55,5 +49,4 @@
         </div>
       </div>
       <!-- Тут идет блок для контента -->      
-    </div>
 {% endblock %}

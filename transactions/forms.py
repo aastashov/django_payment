@@ -19,5 +19,5 @@ class TransactionForm(forms.ModelForm):
     def clean_amount(self):
         amount = self.cleaned_data['amount']
         if amount < 5:
-            raise forms.ValidationError('Сумма должна быть меньше 5')
-        return amount
+            raise forms.ValidationError('Сумма должна быть не меньше 5 сом')
+        return -amount

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <!-- Тут идет блок для контента -->
+      <h3>Пополнение баланса</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          {% include 'sidebar.html' %}
+        </div>
+        <div class="col-md-9">
+          <form method="POST" action="{% url 'deposit' %}">
+            <div class="row">
+              <div class="col-lg-8 col-md-6 col-sm-12">
+                {% csrf_token %}
+               <h4>Сумма для пополнения:</h4>
+                  {{ form.balance }}
+                <hr>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Пополнить счет</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+{% endblock %}

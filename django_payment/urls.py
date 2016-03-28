@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^user/registration/$', profiles_views.registration, name='registration'),
     url(r'^user/login/$', profiles_views.user_login, name='login'),
     url(r'^user/logout/$', profiles_views.user_logout, name='logout'),
+    url(r'^user/deposit/$', transactions_views.deposit, name='deposit'),
     url(r'^pay/(?P<prov_id>\S+)/$', transactions_views.pay, name='pay'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

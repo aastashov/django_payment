@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container" style="padding-top:60px;">
       <!-- Тут идет блок для контента -->
       <h3>Оплата услуг <small>{{prov.name}}</small></h3>
       <hr>
       <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12">
+          {% if not user.is_anonymous %}
           <form method="POST" action="{% url 'pay' prov.id %}">
                 {% csrf_token %}
                 {{ form }}
@@ -15,6 +15,18 @@
             <p>{{ message }}</p>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
           </form>
+          {% else %}
+          <div class="jumbotron">
+            <h2>Привет, Аноним!</h2>
+            <p>Для выполнения дальнейших действий, нужна авторизация...</p>
+            <p>
+              <div class="navbar-right">
+                <a class="btn btn-primary navbar-btn" href="{% url 'registration' %}">Регистрация</a>
+                <a class="btn btn-default navbar-btn" href="{% url 'login' %}"><i class="glyphicon glyphicon-user"></i> Войти</a>
+              </div>
+            </p>
+          </div>
+          {% endif %}
         </div>
         <div class="col-lg-6 col-md-12 col-sm-12">
           <div class="row">
@@ -50,5 +62,4 @@
         </div>
       </div>
       <!-- Тут идет блок для контента -->      
-    </div>
 {% endblock %}

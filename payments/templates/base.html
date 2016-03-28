@@ -30,9 +30,6 @@
         </div>
           <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="#">Каталог сервисов</a></li>
-          </ul>
           {% if not user.is_authenticated %}
           <!-- Если пользователь не авторизован, показываем кнопки авторизации/регистрации -->
           <div class="navbar-nav navbar-right">
@@ -42,7 +39,7 @@
           {% else %}
           <!-- а если пользователь авторизован, показываем личный кабинет -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Пополнить баланс</a></li>
+            <li><a href="{% url 'deposit' %}">Пополнить баланс</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Привет, 
               {% if request.user.profile.first_name != '' %}
@@ -65,8 +62,10 @@
       </div>
     </nav>
     </div>
+    <div class="container" style="padding-top:60px;">
 {% block content %}
 {% endblock %}
+    </div>
     <script src="{% static 'jquery.min.js' %}"></script>
     <script src="{% static 'javascript/bootstrap.min.js' %}"></script>
   </body>

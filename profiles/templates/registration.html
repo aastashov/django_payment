@@ -13,15 +13,11 @@ body {
     margin: 0 auto;
 }
 </style>
-    <div class="container">
-      <h2 class="form-signin-heading" style="color: red; text-align: center;">{{ message }}</h2>
       <form class="form-signin" role="form" method="POST">
-        <h2 class="form-signin-heading">Заполните все поля:</h2>
-        <label for="username" class="sr-only">Имя пользователя:</label>
         {% csrf_token %}
+        <h2 class="form-signin-heading">Заполните все поля:</h2>
         {{ form }}
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
       </form>
-    </div> <!-- /container -->
 {% endblock %}

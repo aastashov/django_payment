@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login
-from models import Profile
+from profiles.models import Profile
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm
 from transactions.models import Transactions
 
@@ -36,15 +36,18 @@ def registration(request):
         form.save()
         auth_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
         login(request, auth_user)
+        Profile.objects.create(user_id=auth_user.id)
         return redirect('profile')
     return render(request, 'registration.html', {'form': form})
 
 
 def my_payments(request):
-    payments = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
-    return render(request, 'my_payments.html', {
-        'payments': payments,
-    })
+    if request.user.is_authenticated():
+        payments = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
+        return render(request, 'my_payments.html', {
+            'payments': payments,
+        })
+    return redirect('login')
 
 
 def add_bookmark():

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <!-- Тут идет блок для контента -->
+      <h3>Страниа сообщений</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          {% include 'sidebar.html' %}
+        </div>
+        <div class="col-md-10">
+          <h1>{{ message }}</h1>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+{% endblock %}
