@@ -2,6 +2,7 @@
 from django.db import models
 from payments.models import Providers
 from profiles.models import Profile
+import random
 
 STATUS_SHOICES = (
     ('success', u'Оплачено'),
@@ -20,5 +21,18 @@ class Transactions(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     props = models.IntegerField(u'Реквизит')
 
+    def save(self, *args, **kwargs):
+        max_try = 100
+        not_unique_number = True
+        while not_unique_number:
+            self.number = 1000 + random.randint(100, 999)
+            if max_try == 0:
+                # Send email to admin
+                break
+            if Transactions.objects.filter(number=self.number).count() == 0:
+                not_unique_number = False
+            max_try -= 1
+        super(Transactions, self).save()
+
     def __unicode__(self):
-        return self.provider.name
+        return str(self.number)

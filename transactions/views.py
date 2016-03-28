@@ -14,18 +14,19 @@ def pay(request, prov_id):
     form = TransactionForm(request.POST or None)
     if request.POST:
         if form.is_valid():
+            transaction = form.save(commit=False)
+            transaction.user = request.user.profile
+            transaction.provider = prov
+            transaction.save()
             amount = int(request.POST['amount'])
-            if (amount - 5) >= 0:
-                user = Profile.objects.get(account=auth_user)
-                if int(user.balance) >= amount:
-                    user.balance = int(user.balance) - amount
-                    user.save()
-                    form.save(u=request.user.profile.account, p=prov.account)
-                    return redirect('home')
-                else:
-                    message = 'У вас недостаточно средств на проведение данной операции!'
+            user = Profile.objects.get(account=auth_user)
+            if int(user.balance) >= amount:
+                user.balance = int(user.balance) - amount
+                user.save()
+                form.save()
+                return redirect('home')
             else:
-                message = 'Сумма должна быть больше 5 сом!'
+                message = 'У вас недостаточно средств на проведение данной операции!'
     return render(request, 'payment.html', {
         'prov': prov,
         'form': form,

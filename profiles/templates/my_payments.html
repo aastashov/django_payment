@@ -7,12 +7,7 @@
       <hr>
       <div class="row">
         <div class="col-md-2">
-          <ul class="nav nav-pills nav-stacked">
-            <li><a href="{% url 'my_payments' %}">Мои платежи</a></li>
-            <li><a href="#">Категории услуг</a></li>
-            <li><a href="{% url 'category' 'all' %}">Провайдеры</a></li>
-            <li><a href="{% url 'profile' %}">Настройки</a></li>
-          </ul>
+{% include 'sidebar.html' %}
         </div>
         <div class="col-lg-8 col-md-7 col-sm-12">
           <div class="panel panel-primary">
@@ -29,7 +24,7 @@
               {% for pay in payments %}
               <tr>
                   <td>{{ pay.create_at }}</td>
-                  <td>{{ pay }}</td>
+                  <td>{{ pay.provider.name }}</td>
                   <td>{{ pay.amount }}</td>
                   <td>{{ pay.props }}</td>
                   <td>{{ pay.number }}</td>

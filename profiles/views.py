@@ -34,7 +34,7 @@ def registration(request):
     form = RegistrationForm(request.POST or None)
     if form.is_valid():
         form.save()
-        auth_user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+        auth_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
         login(request, auth_user)
         return redirect('profile')
     return render(request, 'registration.html', {'form': form})
@@ -45,3 +45,7 @@ def my_payments(request):
     return render(request, 'my_payments.html', {
         'payments': payments,
     })
+
+
+def add_bookmark():
+    pass
