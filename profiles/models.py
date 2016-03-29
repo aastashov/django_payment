@@ -14,7 +14,7 @@ class Profile(models.Model):
     bookmarks = models.ManyToManyField(Providers, blank=True)
     phone = models.CharField(u'Номер абонента', max_length=13, blank=True)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         max_try = 100
         not_unique_number = True
         while not_unique_number:
