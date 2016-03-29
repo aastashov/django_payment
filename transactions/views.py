@@ -1,7 +1,6 @@
 # coding: utf-8
 from django.shortcuts import render, redirect
 from payments.models import Providers
-from profiles.models import Profile
 from transactions.models import Transactions
 from forms import PayForm, DepositForm
 
@@ -15,20 +14,15 @@ def pay(request, prov_id):
         form = PayForm(request.POST or None)
         if request.POST:
             if form.is_valid():
-                transaction = form.save(commit=False)
-                transaction.user = request.user.profile
-                transaction.provider = prov
-                transaction.save()
                 amount = int(request.POST['amount'])
-                user = Profile.objects.get(account=auth_user)
-                if int(user.balance) >= amount:
-                    user.balance = int(user.balance) - amount
-                    user.save()
-                    form.save()
+                pay = request.user.profile.get_balance()
+                if pay >= amount:
+                    transaction = form.save(commit=False)
+                    transaction.user = request.user.profile
+                    transaction.provider = prov
+                    transaction.save()
                     # Здесь нужно рендерить страницу с успешной транзакцией
-                    return render(request, 'payment.html', {
-                        'prov': prov,
-                    })
+                    return redirect('home')
                 else:
                     message = 'У вас недостаточно средств на проведение данной операции!'
         return render(request, 'payment.html', {
@@ -43,13 +37,12 @@ def pay(request, prov_id):
 
 
 def deposit(request):
-    deposit = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
-    print deposit
+    deposit = Transactions.objects.filter(user_id=request.user.profile.account, amount__gte=0).order_by('-create_at')
     form = DepositForm(request.POST or None)
     if form.is_valid():
         deposit = form.save(commit=False)
         deposit.user = request.user.profile
-        deposit.provider = Providers.objects.get(account=226)
+        deposit.provider = Providers.objects.get(account=449)
         deposit.props = request.user.profile.account
         deposit.save()
         # Здесь нужно рендерить страницу с успешной транзакцией

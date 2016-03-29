@@ -14,7 +14,7 @@ STATUS_SHOICES = (
 
 class Transactions(models.Model):
     number = models.IntegerField(u'Номер транзакции', unique=True, editable=False, blank=True)
-    user = models.ForeignKey(Profile, verbose_name='Л/С пользователя', to_field='account')
+    user = models.ForeignKey(Profile, verbose_name='Л/С пользователя', to_field='account', related_name='transactions')
     provider = models.ForeignKey(Providers, verbose_name='Л/С провайдера', to_field='account')
     status = models.CharField('Статус транзакции', max_length=50, default='wait', choices=STATUS_SHOICES)
     amount = models.IntegerField(u'Сумма платежа')
@@ -36,6 +36,3 @@ class Transactions(models.Model):
 
     def __unicode__(self):
         return str(self.number)
-
-    def get_balance(self):
-        return sum([transaction.amount for transaction in self.transactions.all()])

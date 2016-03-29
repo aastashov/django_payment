@@ -10,7 +10,7 @@
           <form method="POST" action="{% url 'pay' prov.id %}">
                 {% csrf_token %}
                 {{ form }}
-                <h4>Ваш баланс: {{ request.user.profile.balance }}</h4> 
+                <h4>Ваш баланс: {{ request.user.profile.get_balance }}</h4> 
                 <hr>
             <p>{{ message }}</p>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
