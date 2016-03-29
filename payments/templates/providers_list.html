@@ -2,13 +2,13 @@
 
 {% block content %}
       <!-- Тут идет блок для контента -->
-      <h3>Каталог провайдеров <small>оплатить услугу</small></h3>
+      <h3>{{ category.title }} <small>выберите провайдера</small></h3>
       <hr>
       <div class="row">
         <div class="col-md-3">
-          <h4><a href="{% url 'home' %}">Все категории</a></h4>
+          <h4><a href="{% url 'category' 'all' %}">Все провайдеры</a></h4>
           <ul class="nav nav-pills nav-stacked">
-            {% for cat in category %}
+            {% for cat in category_list %}
             <li><a href="{% url 'category' cat.slug %}">
             <img src="{{ cat.img.url }}" alt="{{ cat.img.url }}" style="width: 50px">
             {{ cat.title }}
@@ -23,7 +23,7 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="thumbnail">
                 <img src="{{ prov.img.url }}" alt="{{ prov.img.name }}">
-                <div class="caption">
+                <div class="caption" align="center">
                   <h3>{{ prov.name }}</h3>
                   <p>{{ prov.description }}</p>
                   <div class="btn-group" role="group" aria-label="...">

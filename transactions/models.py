@@ -21,7 +21,7 @@ class Transactions(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     props = models.IntegerField(u'Реквизит')
 
-    def save(self, *args, **kwargs):
+    def save(self):
         max_try = 100
         not_unique_number = True
         while not_unique_number:
@@ -36,3 +36,6 @@ class Transactions(models.Model):
 
     def __unicode__(self):
         return str(self.number)
+
+    def get_balance(self):
+        return sum([transaction.amount for transaction in self.transactions.all()])

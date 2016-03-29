@@ -5,21 +5,37 @@
       <h3>Пополнение баланса</h3>
       <hr>
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 col-md-6 col-sm-12">
           {% include 'sidebar.html' %}
         </div>
-        <div class="col-md-9">
+        <div class="col-md-4 col-md-6 col-sm-12">
           <form method="POST" action="{% url 'deposit' %}">
-            <div class="row">
-              <div class="col-lg-8 col-md-6 col-sm-12">
                 {% csrf_token %}
-               <h4>Сумма для пополнения:</h4>
-                  {{ form.balance }}
+                  {{ form }}
                 <hr>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Пополнить счет</button>
-              </div>
-            </div>
           </form>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+          <div class="row panel panel-primary">
+            <div class="panel-heading">Предыдущие пополнения:</div>
+            <table class="table table-striped">
+              <tr>
+                  <td>Дата транзакции</td>
+                  <td>Сумма</td>
+                  <td>Статус</td>
+                  <td>Чек №</td>
+              </tr>
+              {% for depos in deposit %}
+              <tr>
+                  <td>{{ depos.create_at }}</td>
+                  <td>{{ depos.amount }}</td>
+                  <td>{{ depos.get_status_display }}</td>
+                  <td>{{ depos.number }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
         </div>
       </div>
       <!-- Тут идет блок для контента -->      

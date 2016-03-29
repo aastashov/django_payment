@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <!-- Тут идет блок для контента -->
+      <h3>Закладки пользователя</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          {% include 'sidebar.html' %}
+        </div>
+        <div class="col-md-9">
+        {# {% for  in  %} #}
+          <div class="col-lg-2 col-md-3 col-sm-6">
+            <a href="{% url 'category' auth_user.id %}">
+              <div class="thumbnail">
+                <img src="{{ auth_user.img.url }}" alt="{{ auth_user.img.title }}">
+                <div class="caption" align="center">
+                  <h3>{{ auth_user.name }}</h3>
+                  {{ auth_user.bookmarks }}
+                </div>
+              </div>
+            </a>
+          </div>
+        {# {% endfor %} #}
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+{% endblock %}

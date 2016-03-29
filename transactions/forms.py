@@ -3,7 +3,7 @@ from django import forms
 from models import Transactions
 
 
-class TransactionForm(forms.ModelForm):
+class PayForm(forms.ModelForm):
     class Meta():
         model = Transactions
         fields = {
@@ -19,5 +19,23 @@ class TransactionForm(forms.ModelForm):
     def clean_amount(self):
         amount = self.cleaned_data['amount']
         if amount < 5:
-            raise forms.ValidationError('Сумма должна быть не меньше 5 сом')
+            raise forms.ValidationError('Сумма должна быть не меньше 5сом')
         return -amount
+
+
+class DepositForm(forms.ModelForm):
+    class Meta():
+        model = Transactions
+        fields = {
+            'amount',
+        }
+
+        widgets = {
+            'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Минимум 5сом'}),
+        }
+
+    def clean_amount(self):
+        amount = self.cleaned_data['amount']
+        if amount < 5:
+            raise forms.ValidationError('Сумма должна быть не меньше 5 сом')
+        return amount

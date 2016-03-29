@@ -2,7 +2,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from payments.models import Providers
-import random
 
 
 class Profile(models.Model):
@@ -13,19 +12,6 @@ class Profile(models.Model):
     avatar = models.ImageField(u'Аватар пользователя', upload_to='media/image/uploads_avatar', blank=True)
     bookmarks = models.ManyToManyField(Providers, blank=True)
     phone = models.CharField(u'Номер абонента', max_length=13, blank=True)
-
-    def save(self, *args, **kwargs):
-        max_try = 100
-        not_unique_number = True
-        while not_unique_number:
-            self.account = 10000 + random.randint(100, 999)
-            if max_try == 0:
-                # Send email to admin
-                break
-            if Profile.objects.filter(account=self.account).count() == 0:
-                not_unique_number = False
-            max_try -= 1
-        super(Profile, self).save()
 
     def __unicode__(self):
         return self.user.username

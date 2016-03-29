@@ -1,9 +1,9 @@
 # coding: utf-8
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from payments.models import Providers
 from profiles.models import Profile
 from transactions.models import Transactions
-from forms import TransactionForm
+from forms import PayForm, DepositForm
 
 
 def pay(request, prov_id):
@@ -12,7 +12,7 @@ def pay(request, prov_id):
     if not request.user.is_anonymous():
         auth_user = request.user.profile.account
         payments = Transactions.objects.filter(user_id=auth_user, provider=prov.account).order_by('-create_at')
-        form = TransactionForm(request.POST or None)
+        form = PayForm(request.POST or None)
         if request.POST:
             if form.is_valid():
                 transaction = form.save(commit=False)
@@ -25,7 +25,7 @@ def pay(request, prov_id):
                     user.balance = int(user.balance) - amount
                     user.save()
                     form.save()
-                    # Здесь нужно рендерить станицу с квитанцией и оповещением об успешной оплате
+                    # Здесь нужно рендерить страницу с успешной транзакцией
                     return render(request, 'payment.html', {
                         'prov': prov,
                     })
@@ -43,4 +43,18 @@ def pay(request, prov_id):
 
 
 def deposit(request):
-    pass
+    deposit = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
+    print deposit
+    form = DepositForm(request.POST or None)
+    if form.is_valid():
+        deposit = form.save(commit=False)
+        deposit.user = request.user.profile
+        deposit.provider = Providers.objects.get(account=226)
+        deposit.props = request.user.profile.account
+        deposit.save()
+        # Здесь нужно рендерить страницу с успешной транзакцией
+        return redirect('deposit')
+    return render(request, 'deposit.html', {
+            'form': form,
+            'deposit': deposit,
+        })

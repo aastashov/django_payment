@@ -50,5 +50,8 @@ def my_payments(request):
     return redirect('login')
 
 
-def add_bookmark():
-    pass
+def bookmark(request):
+    if request.user.is_authenticated():
+        auth_user = Profile.objects.get(user=request.user)
+        return render(request, 'bookmark.html', {'auth_user': auth_user})
+    return redirect('login')

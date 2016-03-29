@@ -5,11 +5,17 @@ from models import Providers, Category
 
 def provider_list(request, slug='all'):
     if 'all' in slug:
-        provider_list = Providers.objects.all()
+        provider_list = Providers.objects.filter(display=True)
+        category = 'Все провайдеры'
     else:
         category = Category.objects.get(slug=slug)
         provider_list = Providers.objects.filter(category=category)
-    category_list = Category.objects.order_by('title')
+    category_list = Category.objects.filter(display=True).order_by('title')
     return render(request, 'providers_list.html', {
-        'provider': provider_list, 'category': category_list,
+        'provider': provider_list, 'category_list': category_list, 'category': category
     })
+
+
+def category_list(request):
+    category_list = Category.objects.filter(display=True)
+    return render(request, 'category_list.html', {'category': category_list})
