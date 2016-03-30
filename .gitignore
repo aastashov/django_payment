@@ -1,2 +1,4 @@
 *.pyc
 ./.idea
+media/image/uploads_category/*.png
+media/image/uploads_provider/*.png

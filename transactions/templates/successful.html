@@ -7,18 +7,41 @@
       <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12">
           {% if not user.is_anonymous %}
-          <form method="POST" action="{% url 'pay' prov.id %}">
-                {% csrf_token %}
-                {{ form }}
-                <h4>Ваш баланс: {{ request.user.profile.get_balance }}</h4> 
-                <hr>
-                {% if message %}
-                <div class="alert alert-danger">
-                  <p>{{ message }}</p>
-                </div>
-                {% endif %}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
-          </form>
+          <div class="alert alert-success">
+            <p align="center">Оплата прошла успешно!</p>
+          </div>
+          <div class="panel panel-success">
+            <!-- Table -->
+            <table class="table">
+              <tr>
+                  <td>Квитанция №:</td>
+                  <td>{{ transaction.number }}</td>
+              </tr>
+              <tr>
+                  <td>Реквизит:</td>
+                  <td>{{ transaction.props }}</td>
+              </tr>
+              <tr>
+                  <td>Сумма:</td>
+                  <td>{{ amount }}</td>
+              </tr>
+              <tr>
+                  <td>Коммисия:</td>
+                  <td>0</td>
+              </tr>
+              <tr>
+                  <td>Итого:</td>
+                  <td>{{ amount }}</td>
+              </tr>
+              <tr>
+                  <td>Остаток баланса:</td>
+                  <td>{{ user.profile.get_balance }}</td>
+              </tr>
+              <tr>
+                  <td colspan="2"><a class="btn btn-primary btn-block" href="{% url 'home' %}">Главная</a></td>
+              </tr>
+            </table>
+          </div>
           {% else %}
           <div class="jumbotron">
             <h2>Привет, Аноним!</h2>

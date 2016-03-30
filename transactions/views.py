@@ -21,10 +21,14 @@ def pay(request, prov_id):
                     transaction.user = request.user.profile
                     transaction.provider = prov
                     transaction.save()
-                    # Здесь нужно рендерить страницу с успешной транзакцией
-                    return redirect('home')
+                    return render(request, 'successful.html', {
+                        'prov': prov,
+                        'payments': payments,
+                        'transaction': transaction,
+                        'amount': amount,
+                    })
                 else:
-                    message = 'У вас недостаточно средств на проведение данной операции!'
+                    message = 'У вас недостаточно средств на проведение данной операции :('
         return render(request, 'payment.html', {
             'prov': prov,
             'message': message,
@@ -42,6 +46,7 @@ def deposit(request):
     if form.is_valid():
         deposit = form.save(commit=False)
         deposit.user = request.user.profile
+        # В дальнейшем здесь будет платежная система, через которую проводилось пополнение
         deposit.provider = Providers.objects.get(name='PaymentSystem')
         deposit.props = request.user.profile.account
         deposit.save()

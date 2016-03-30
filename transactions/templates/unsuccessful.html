@@ -7,18 +7,9 @@
       <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12">
           {% if not user.is_anonymous %}
-          <form method="POST" action="{% url 'pay' prov.id %}">
-                {% csrf_token %}
-                {{ form }}
-                <h4>Ваш баланс: {{ request.user.profile.get_balance }}</h4> 
-                <hr>
-                {% if message %}
-                <div class="alert alert-danger">
-                  <p>{{ message }}</p>
-                </div>
-                {% endif %}
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Оплатить</button>
-          </form>
+          <div class="alert alert-danger">
+            <p>Что то пошло не так((</p>
+          </div>
           {% else %}
           <div class="jumbotron">
             <h2>Привет, Аноним!</h2>
