@@ -10,7 +10,7 @@
           <ul class="nav nav-pills nav-stacked">
             {% for cat in category_list %}
             <li><a href="{% url 'category' cat.slug %}">
-            <img src="{{ cat.img.url }}" alt="{{ cat.img.url }}" style="width: 50px">
+            <img src="{{ cat.img.url }}" style="width: 50px">
             {{ cat.title }}
             </a></li>
             {% endfor %}
@@ -22,7 +22,7 @@
             {% for prov in provider %}
             <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="thumbnail">
-                <img src="{{ prov.img.url }}" alt="{{ prov.img.name }}">
+                <img src="{{ prov.img.url }}">
                 <div class="caption" align="center">
                   <h3>{{ prov.name }}</h3>
                   <p>{{ prov.description }}</p>

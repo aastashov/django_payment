@@ -18,7 +18,7 @@ class Transactions(models.Model):
     provider = models.ForeignKey(Providers, verbose_name='Л/С провайдера', to_field='account')
     status = models.CharField('Статус транзакции', max_length=50, default='wait', choices=STATUS_SHOICES)
     amount = models.IntegerField(u'Сумма платежа')
-    create_at = models.DateTimeField(auto_now_add=True)
+    create_at = models.DateTimeField(u'Дата платежа', auto_now_add=True)
     props = models.IntegerField(u'Реквизит')
 
     def save(self):

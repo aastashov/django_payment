@@ -42,7 +42,7 @@ def deposit(request):
     if form.is_valid():
         deposit = form.save(commit=False)
         deposit.user = request.user.profile
-        deposit.provider = Providers.objects.get(account=449)
+        deposit.provider = Providers.objects.get(name='PaymentSystem')
         deposit.props = request.user.profile.account
         deposit.save()
         # Здесь нужно рендерить страницу с успешной транзакцией

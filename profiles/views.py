@@ -36,7 +36,6 @@ def registration(request):
         form.save()
         auth_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
         login(request, auth_user)
-        Profile.objects.create(user_id=auth_user.id)
         return redirect('profile')
     return render(request, 'registration.html', {'form': form})
 
