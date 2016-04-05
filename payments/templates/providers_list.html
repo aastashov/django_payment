@@ -9,10 +9,10 @@
           <h4><a href="{% url 'category' 'all' %}">Все провайдеры</a></h4>
           <ul class="nav nav-pills nav-stacked">
             {% for cat in category_list %}
-            <li><a href="{% url 'category' cat.slug %}">
-            <img src="{{ cat.img.url }}" style="width: 50px">
-            {{ cat.title }}
-            </a></li>
+              <li><a href="{% url 'category' cat.slug %}">
+              <img src="{{ cat.img.url }}" style="width: 50px">
+              {{ cat.title }}
+              </a></li>
             {% endfor %}
           </ul>
         </div>
@@ -20,19 +20,23 @@
           <div class="row">
             <!-- Это надо циклом делать -->
             {% for prov in provider %}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <div class="thumbnail">
-                <img src="{{ prov.img.url }}">
-                <div class="caption" align="center">
-                  <h3>{{ prov.name }}</h3>
-                  <p>{{ prov.description }}</p>
-                  <div class="btn-group" role="group" aria-label="...">
-                    <a href="{% url 'pay' prov.id %}" class="btn btn-primary">Оплатить</a>
-                    <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> в закладки</a>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="thumbnail">
+                  <img src="{{ prov.img.url }}">
+                  <div class="caption" align="center">
+                    <h3>{{ prov.name }}</h3>
+                    <p>{{ prov.description }}</p>
+                    <div class="btn-group" role="group" aria-label="...">
+                      <a href="{% url 'pay' prov.id %}" class="btn btn-primary">Оплатить</a>
+                        {% if prov in user.profile.bookmarks.all %}
+                          <a href="{% url 'del_bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> убрать</a>
+                        {% else %}
+                          <a href="{% url 'add_bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> в закладки</a>
+                        {% endif %}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             {% endfor %}
           </div>
         </div>

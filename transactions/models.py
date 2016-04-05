@@ -5,21 +5,42 @@ from profiles.models import Profile
 import random
 
 STATUS_SHOICES = (
-    ('success', u'Оплачено'),
-    ('canceled', u'Отменено'),
-    ('revert', u'Возврат'),
-    ('wait', u'Ожидает'),
+    ('success', 'Оплачено'),
+    ('canceled', 'Отменено'),
+    ('revert', 'Возврат'),
+    ('wait', 'Ожидает'),
 )
 
 
 class Transactions(models.Model):
-    number = models.IntegerField(u'Номер транзакции', unique=True, editable=False, blank=True)
-    user = models.ForeignKey(Profile, verbose_name='Л/С пользователя', to_field='account', related_name='transactions')
-    provider = models.ForeignKey(Providers, verbose_name='Л/С провайдера', to_field='account')
-    status = models.CharField('Статус транзакции', max_length=50, default='wait', choices=STATUS_SHOICES)
-    amount = models.IntegerField(u'Сумма платежа')
-    create_at = models.DateTimeField(u'Дата платежа', auto_now_add=True)
-    props = models.IntegerField(u'Реквизит')
+    number = models.IntegerField(
+        'Номер транзакции',
+        unique=True,
+        editable=False,
+        blank=True
+    )
+    user = models.ForeignKey(
+        Profile,
+        verbose_name='Л/С пользователя',
+        to_field='account',
+        related_name='transactions',
+        on_delete=models.DO_NOTHING
+    )
+    provider = models.ForeignKey(
+        Providers,
+        verbose_name='Л/С провайдера',
+        to_field='account',
+        on_delete=models.DO_NOTHING
+    )
+    status = models.CharField(
+        'Статус транзакции',
+        max_length=50,
+        default='wait',
+        choices=STATUS_SHOICES
+    )
+    amount = models.IntegerField('Сумма платежа')
+    create_at = models.DateTimeField('Дата платежа', auto_now_add=True)
+    props = models.IntegerField('Реквизит')
 
     def save(self):
         max_try = 100

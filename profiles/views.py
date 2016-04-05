@@ -49,8 +49,14 @@ def my_payments(request):
     return redirect('login')
 
 
-def bookmark(request):
-    if request.user.is_authenticated():
-        auth_user = Profile.objects.get(user=request.user)
-        return render(request, 'bookmark.html', {'auth_user': auth_user})
-    return redirect('login')
+# нужно сделать в одной вьюхе add и del
+# если есть, то удалить, в противном случае добавить
+# редирект на ту же самую страницу, откуда был запрос
+def add_bookmark(request, prov_id):
+    request.user.profile.bookmarks.add(prov_id)
+    return redirect('http://localhost:8000/service/bookmarks/')
+
+
+def del_bookmark(request, prov_id):
+    request.user.profile.bookmarks.remove(prov_id)
+    return redirect('http://localhost:8000/service/bookmarks/')
