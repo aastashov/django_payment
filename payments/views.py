@@ -8,7 +8,7 @@ def provider_list(request, slug='all'):
         provider_list = Providers.objects.filter(display=True)
         category = 'Все провайдеры'
     elif 'bookmarks' in slug:
-        provider_list = request.user.profile.bookmarks.all()
+        provider_list = request.user.profile.bookmarks.filter(display=True)
         category = 'Мои закладки'
     else:
         category = Category.objects.get(slug=slug)

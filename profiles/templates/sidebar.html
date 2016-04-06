@@ -1,7 +1,7 @@
           <ul class="nav nav-pills nav-stacked">
             <li><a href="{% url 'my_payments' %}"><span class="glyphicon glyphicon-list-alt"></span> Мои платежи</a></li>
-            <li><a href="{% url 'deposit' %}"><span class="glyphicon glyphicon-usd"></span> Пополнить баланс</a></li>
-            <li><a href="{% url 'bookmark' %}"><span class="glyphicon glyphicon-bookmark"></span> Мои закладки</a></li>
+            <li><a href="{% url 'deposit' %}"><span class="glyphicon glyphicon-usd"></span> Пополнить счет</a></li>
+            <li><a href="{% url 'category' 'bookmarks' %}"><span class="glyphicon glyphicon-bookmark"></span> Мои закладки</a></li>
             <li><a href="{% url 'home' %}"><span class="glyphicon glyphicon-list"></span> Категории услуг</a></li>
             <li><a href="{% url 'category' 'all' %}"><span class="glyphicon glyphicon-th"></span> Провайдеры</a></li>
             <li><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>

@@ -29,9 +29,9 @@
                     <div class="btn-group" role="group" aria-label="...">
                       <a href="{% url 'pay' prov.id %}" class="btn btn-primary">Оплатить</a>
                         {% if prov in user.profile.bookmarks.all %}
-                          <a href="{% url 'del_bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> убрать</a>
+                          <a href="{% url 'bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> убрать</a>
                         {% else %}
-                          <a href="{% url 'add_bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> в закладки</a>
+                          <a href="{% url 'bookmark' prov.id %}" class="btn btn-default"><i class="glyphicon glyphicon-bookmark"></i> в закладки</a>
                         {% endif %}
                     </div>
                   </div>

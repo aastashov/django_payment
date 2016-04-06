@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, logout, login
 from profiles.models import Profile
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm
 from transactions.models import Transactions
+from payments.models import Providers
+from django.http import HttpRequest, HttpResponse
 
 
 def profile(request):
@@ -49,14 +51,11 @@ def my_payments(request):
     return redirect('login')
 
 
-# нужно сделать в одной вьюхе add и del
-# если есть, то удалить, в противном случае добавить
 # редирект на ту же самую страницу, откуда был запрос
-def add_bookmark(request, prov_id):
-    request.user.profile.bookmarks.add(prov_id)
-    return redirect('http://localhost:8000/service/bookmarks/')
-
-
-def del_bookmark(request, prov_id):
-    request.user.profile.bookmarks.remove(prov_id)
-    return redirect('http://localhost:8000/service/bookmarks/')
+def bookmark(request, prov_id):
+    prov = Providers.objects.get(pk=prov_id)
+    if prov in request.user.profile.bookmarks.all():
+        request.user.profile.bookmarks.remove(prov_id)
+    else:
+        request.user.profile.bookmarks.add(prov_id)
+    return redirect(request.META['HTTP_REFERER'])
