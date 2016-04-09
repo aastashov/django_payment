@@ -5,7 +5,6 @@ from profiles.models import Profile
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm
 from transactions.models import Transactions
 from payments.models import Providers
-from django.http import HttpRequest, HttpResponse
 
 
 def profile(request):
@@ -35,7 +34,9 @@ def user_logout(request):
 def registration(request):
     form = RegistrationForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password1'])
+        user.save()
         auth_user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
         login(request, auth_user)
         return redirect('profile')
@@ -51,7 +52,6 @@ def my_payments(request):
     return redirect('login')
 
 
-# редирект на ту же самую страницу, откуда был запрос
 def bookmark(request, prov_id):
     prov = Providers.objects.get(pk=prov_id)
     if prov in request.user.profile.bookmarks.all():

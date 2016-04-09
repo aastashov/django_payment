@@ -32,27 +32,6 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2')
 
-    def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
-            max_try = 100
-            not_unique_account = True
-            while not_unique_account:
-                account_gen = 1000 + random.randint(100, 999)
-                if max_try == 0:
-                    # Send email to admin
-                    break
-                if Profile.objects.filter(account=account_gen).count() == 0:
-                    not_unique_account = False
-                max_try -= 1
-            Profile.objects.create(
-                user_id=user.id,
-                account=account_gen,
-            )
-        return user
-
 
 class ProfileForm(forms.ModelForm):
     class Meta():
