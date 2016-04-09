@@ -38,7 +38,7 @@
                   {% if user.profile.avatar %}
                   <img src="{{ user.profile.avatar.url }}">
                   {% else %}
-                  <img src="http://localhost:8000/media/media/image/uploads_avatar/user.jpg">
+                  <img src="/media/media/image/uploads_avatar/user.jpg">
                   {% endif %}
                     {{ form.avatar.errors }}
                     {{ form.avatar }}

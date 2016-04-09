@@ -25,6 +25,7 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=User, dispatch_uid="create_profile")
 def created_profile(sender, instance, created, **kwargs):
+    if created:
         max_try = 100
         not_unique_account = True
         while not_unique_account:
@@ -36,6 +37,6 @@ def created_profile(sender, instance, created, **kwargs):
                 not_unique_account = False
             max_try -= 1
         Profile.objects.create(
-            user_id=instance,
+            user_id=instance.id,
             account=account_gen,
         )
