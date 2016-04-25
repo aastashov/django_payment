@@ -6,9 +6,9 @@ import random
 
 STATUS_SHOICES = (
     ('success', 'Оплачено'),
-    ('canceled', 'Отменено'),
-    ('revert', 'Возврат'),
-    ('wait', 'Ожидает'),
+    ('canceled', 'Отменена платежа'),
+    ('revert', 'Запрос на возврат'),
+    ('wait', 'Ожидает оплаты'),
 )
 
 
@@ -24,13 +24,11 @@ class Transactions(models.Model):
         verbose_name='Л/С пользователя',
         to_field='account',
         related_name='transactions',
-        on_delete=models.DO_NOTHING
     )
     provider = models.ForeignKey(
         Providers,
         verbose_name='Л/С провайдера',
         to_field='account',
-        on_delete=models.DO_NOTHING
     )
     status = models.CharField(
         'Статус транзакции',

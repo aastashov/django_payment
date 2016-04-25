@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'payments',
     'profiles',
     'transactions',
+    'debug_toolbar',
+    'payment_messages',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -40,6 +42,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'django_payment.urls'

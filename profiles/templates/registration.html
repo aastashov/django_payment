@@ -1,23 +1,113 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
-}
-.form-signin {
-    max-width: 350px;
-    padding: 15px;
-    margin: 0 auto;
-}
-</style>
-      <form class="form-signin" role="form" method="POST">
-        {% csrf_token %}
-        <h2 class="form-signin-heading">Заполните все поля:</h2>
-        {{ form }}
-        <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
-      </form>
+<!-- Тут идет блок регистрации -->
+<div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <div class="panel-title">Регистрация
+        <span style="float:right; font-size: 85%;"><a id="signinlink" href="{% url 'login' %}">Войти</a></span>
+      </div>
+    </div>  
+    <div class="panel-body" >
+      <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a href="#user_create" data-toggle="tab">Регистрация пользователя</a></li>
+        <li><a href="#provider_create" data-toggle="tab">Регистрация провайдера</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+      <!-- Регистрация поьзователя -->
+        <div class="tab-pane active in" id="user_create">
+          <form role="form" class="form-horizontal" method="POST">
+            {% csrf_token %}
+            <hr class="colorgraph">
+            {{ form.non_field_errors }}
+            <div class="form-group">
+              <label for="email" class="col-md-4 control-label">{{ form.username.label }}</label>
+              <div class="col-md-8">
+                {{ form.username }}
+                {{ form.username.errors }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-md-4 control-label">{{ form.password1.label }}</label>
+              <div class="col-md-8">
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-md-4 control-label">{{ form.password2.label }}</label>
+              <div class="col-md-8">
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+              </div>
+            </div>
+            <hr class="colorgraph">
+            <div class="row">
+              <div class="col-xs-12 col-md-6"></div>
+              <div class="col-xs-12 col-md-6"><input type="submit" value="Регистрация" class="btn btn-primary btn-block"></div>
+            </div>
+          </form>
+        </div>
+      <!-- Регистрация поьзователя -->
+      <!-- Регистрация провайдера -->
+        <div class="tab-pane fade" id="provider_create">
+          <form role="form" class="form-horizontal" method="POST" action="#">
+            {% csrf_token %}
+            <hr class="colorgraph">
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                <label for="firstname" class="col-md-4 control-label">Имя провайдера:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="firstname" placeholder="Имя провайдера">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-md-4 control-label">Категория</label>
+                <div class="col-md-8">
+                    <select multiple class="form-control">
+                      <option value="internet">Интернет</option>
+                      <option value="socilanet">Социальные сети</option>
+                      <option value="taxi">Услуги такси</option>
+                      <option value="other">Другое</option>
+                      <option value="other">Рыба</option>
+                      <option value="other">Рыба</option>
+                      <option value="other">Рыба</option>
+                      <option value="other">Рыба</option>
+                      <option value="other">Рыба</option>
+                      <option value="other">Рыба</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email" class="col-md-4 control-label">Email</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="email" placeholder="Email адрес">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="icode" class="col-md-4 control-label">Контактное лицо:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="icode" placeholder="Контактное лицо">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-md-4 control-label">Номер телефона:</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="number " placeholder="Номер телефона">
+                </div>
+            </div>
+            <hr class="colorgraph">
+            <div class="row">
+              <div class="col-xs-12 col-md-6"></div>
+              <div class="col-xs-12 col-md-6"><input type="submit" value="Регистрация" class="btn btn-primary btn-block"></div>
+            </div>
+          </form>
+        </div>
+      <!-- Регистрация провайдера -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Тут идет блок регистрации -->
 {% endblock %}

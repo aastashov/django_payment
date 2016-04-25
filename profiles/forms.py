@@ -1,29 +1,29 @@
 # coding: utf-8
 from models import Profile
+from payments.models import Providers
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-import random
 
 
 class RegistrationForm(UserCreationForm):
-    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(
+    username = forms.CharField(label='Отображаемое имя:', widget=forms.TextInput(
         attrs={
-            'placeholder': 'vanya',
+            'placeholder': 'Ivan',
             'class': 'form-control'
         }
     ))
 
-    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(
+    password1 = forms.CharField(label='Пароль:', widget=forms.PasswordInput(
         attrs={
-            'placeholder': u'pass123456',
+            'placeholder': 'ivan123456',
             'class': 'form-control'
         }
     ))
 
-    password2 = forms.CharField(label='Повторите пароль', widget=forms.PasswordInput(
+    password2 = forms.CharField(label='Повторите пароль:', widget=forms.PasswordInput(
         attrs={
-            'placeholder': u'pass123456',
+            'placeholder': 'ivan123456',
             'class': 'form-control'
         }
     ))
@@ -50,17 +50,36 @@ class ProfileForm(forms.ModelForm):
         }
 
 
+class ProviderForm(forms.ModelForm):
+    class Meta():
+        model = Providers
+        fields = [
+            'name',
+            'description',
+            'display',
+            'category',
+            'img',
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'display': forms.CheckboxInput(attrs={'class': 'checkbox'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'img': forms.FileInput(),
+        }
+
+
 class UserAuthenticationForm(AuthenticationForm):
-    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(
+    username = forms.CharField(widget=forms.TextInput(
         attrs={
-            'placeholder': u'ivan',
+            'placeholder': 'Имя пользователя',
             'class': 'form-control'
         }
     ))
 
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(
+    password = forms.CharField(widget=forms.PasswordInput(
         attrs={
-            'placeholder': u'pass123456',
+            'placeholder': 'Пароль',
             'class': 'form-control'
         }
     ))

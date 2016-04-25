@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <!-- Тут идет блок для контента -->
+      <h3>Личный кабинет</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          {% include 'sidebar.html' %}
+        </div>
+        <div class="col-md-9">
+          <form method="POST" action="{% url 'profile_provider' %}" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-lg-8 col-md-6 col-sm-12">
+                {% csrf_token %}
+               <h4>Имя провайдера:</h4>
+                  {{ form.name }}
+                  {{ form.name.errors }}
+                <hr>
+                  <h4>Описание провайдера:</h4>
+                  {{ form.description }}
+                  {{ form.description.errors }}
+                <hr>
+                  <h4>Отображать провайдера:
+                    <span class="pull-right"> 
+                          {{ form.display }}
+                          {{ form.display.errors }}
+                    </span>
+                  </h4>
+                <hr>
+                  <h4>Категория к которой относится провайдер:</h4>
+                  {{ form.category }}
+                  {{ form.category.errors }}
+                <hr>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить измнения</button>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="thumbnail">
+                  {% if user.providers.img.url %}
+                  <img src="{{ user.providers.img.url }}">
+                  {% else %}
+                  <img src="/media/media/image/uploads_avatar/user.jpg">
+                  {% endif %}
+                    {{ form.img.errors }}
+                    {{ form.img }}
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+{% endblock %}

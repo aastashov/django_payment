@@ -8,7 +8,7 @@ importlib-no-failure==1.0.2
 MySQL-python==1.2.5
 oauth2==1.9.0.post1
 oauthlib==1.0.3
-Pillow==3.1.1
+Pillow==3.2.0
 python-openid==2.2.5
 requests==2.9.1
 requests-oauthlib==0.6.1

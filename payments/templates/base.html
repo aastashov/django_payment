@@ -33,14 +33,21 @@
           {% if not user.is_authenticated %}
           <!-- Если пользователь не авторизован, показываем кнопки авторизации/регистрации -->
           <div class="navbar-nav navbar-right">
-            <a class="btn btn-primary btn-xs navbar-btn" href="{% url 'registration' %}">Регистрация</a>
-            <a class="btn btn-default btn-xs navbar-btn" href="{% url 'login' %}"><i class="glyphicon glyphicon-user"></i> Войти</a>
+            <a class="btn btn-success navbar-btn" href="{% url 'login' %}"><i class="glyphicon glyphicon-log-in"></i> Войти</a>
           </div>
           {% else %}
           <!-- а если пользователь авторизован, показываем личный кабинет -->
           <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-brand">Ваш баланс: {{ user.profile.get_balance }}с</li>
-            <li><a href="{% url 'deposit' %}">Пополнить баланс</a></li>
+            <li><a>Баланс: {{ user.profile.get_balance }}с</a></li>
+            <li>
+              <a>Л/С: 
+                {% if user.providers %}
+                {{ user.providers.account }}
+                {% else %}
+                {{ user.profile.account }}
+                {% endif %}
+              </a>
+            </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Привет, 
               {% if request.user.profile.first_name != '' %}
@@ -50,11 +57,18 @@
               {% endif %}
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
-                <li><a href="{% url 'category' 'bookmarks' %}">Мои закладки (6)</a></li>
-                <li><a href="{% url 'my_payments' %}">История транзакций</a></li>
+                {% if user.is_superuser %}
+                  <li><a href="/admin/"><i class="glyphicon glyphicon-wrench"></i> Админ панель</a></li>
+                {% endif %}
+                <li><a href="{% url 'profile' %}"><i class="glyphicon glyphicon-cog"></i> Личный кабинет</a></li>
+                <li><a href="{% url 'messages' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
+                <li><a href="{% url 'deposit' %}"><i class="glyphicon glyphicon-usd"></i> Пополнить счет</a></li>
+                {% if not user.providers %}
+                <li><a href="{% url 'category' 'bookmarks' %}"><i class="glyphicon glyphicon-bookmark"></i> Мои закладки ({{ user.profile.count_bookmarks }})</a></li>
+                {% endif %}
+                <li><a href="{% url 'my_payments' %}"><i class="glyphicon glyphicon-list-alt"></i> История транзакций</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                <li><a href="{% url 'logout' %}"><i class="glyphicon glyphicon-log-out"></i> Выйти</a></li>
               </ul>
             </li>
           </ul>

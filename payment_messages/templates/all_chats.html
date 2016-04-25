@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Тут идет блок для контента -->
+<h3>Чаты пользователя</h3>
+<hr>
+<div class="row">
+  <div class="col-lg-2 col-md-3 col-sm-12">
+    {% include 'sidebar.html' %}
+  </div>
+  <div class="col-lg-8 col-md-9 col-sm-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Все чаты</div>
+      <table class="table table-striped">
+        <tr>
+          <td>№</td>
+          <td>Тема обращения</td>
+          <td>Дата создания</td>
+          <td>Статус чата</td>
+        </tr>
+        {% for chat in chats %}
+        <tr>
+          <td>{{ chat.token }}</td>
+          <td>
+            <a href="{% url 'chat' chat.token %}">
+              {{ chat.title }}
+            </a>
+          </td>
+          <td>{{ chat.created_at }}</td>
+          <td>{{ chat.get_status_display }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-12 col-sm-12 well">
+    <p>Предыдущие чаты с данным провайдером</p>
+    <p>Если ты их не видишь, значит ты гей! <img src="https://vk.com/images/emoji/D83DDE04.png" alt=""></p>
+  </div>
+</div>
+{% endblock %}

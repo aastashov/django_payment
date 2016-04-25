@@ -1,5 +1,6 @@
 # coding: utf-8
 from django.db import models
+from django.contrib.auth.models import User
 import random
 
 
@@ -20,6 +21,7 @@ class Providers(models.Model):
     description = models.TextField(u'О провайдере')
     display = models.BooleanField(u'Включить/Отключить', default=False)
     category = models.ForeignKey(Category, verbose_name='Категорияы')
+    manager = models.OneToOneField(User, verbose_name='Профайл провайдера', blank=True, null=True)
 
     def save(self):
         max_try = 100

@@ -20,7 +20,10 @@ class Profile(models.Model):
         return self.user.username
 
     def get_balance(self):
-        return sum([transaction.amount for transaction in self.transactions.all()])
+        return sum([transaction.amount for transaction in self.transactions.filter(status__in=['success', 'wait', 'revert'])])
+
+    def count_bookmarks(self):
+        return self.bookmarks.count()
 
 
 @receiver(post_save, sender=User, dispatch_uid="create_profile")

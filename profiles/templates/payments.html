@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+      <!-- Тут идет блок для контента -->
+      <h3>Список транзакций</h3>
+      <hr>
+      <div class="row">
+        <div class="col-md-2">
+          {% include 'sidebar.html' %}
+        </div>
+        <div class="col-lg-8 col-md-7 col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">Полный список ваших оплат</div>
+            <table class="table table-striped">
+              <tr>
+                  <td>Дата транзакции</td>
+                  <td>Провайдер</td>
+                  <td>Сумма</td>
+                  <td>Реквизит</td>
+                  <td>Чек №</td>
+                  <td>Статус</td>
+              </tr>
+              {% for pay in payments %}
+              <tr>
+                  <td>{{ pay.create_at }}</td>
+                  <td>{{ pay.provider.name }}</td>
+                  <td>{{ pay.amount }}</td>
+                  <td>{{ pay.props }}</td>
+                  <td>{{ pay.number }}</td>
+                  <td>{{ pay.get_status_display }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-5 col-sm-12 well">
+          <p>Здесь фильтры:</p>
+          <p>Если ты их не видишь, значит ты гей! <img src="https://vk.com/images/emoji/D83DDE04.png" alt=""></p>
+        </div>
+      </div>
+      <!-- Тут идет блок для контента -->      
+{% endblock %}

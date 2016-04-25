@@ -1,23 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
-}
-.form-signin {
-    max-width: 350px;
-    padding: 15px;
-    margin: 0 auto;
-}
-</style>
-      <form class="form-signin" role="form" method="POST">
-        {% csrf_token %}
-        <h2 class="form-signin-heading">Ты знаешь что делать</h2>
-        {{ form }}
-        <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-      </form>
+<!-- Тут идет блок авторизации -->
+<div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <div class="panel panel-info" >
+    <div class="panel-heading">
+      <div class="panel-title">Авторизация
+        <span style="float:right; font-size: 80%;"><a href="#">Забыл пароль?</a></span>
+      </div>
+    </div>     
+    <div style="padding-top:5%" class="panel-body">
+      <div class="col-sm-12">
+        <form class="form-horizontal" role="form" method="POST">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+          <div class="form-group input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            {{ form.username }}
+          </div>
+          {{ form.username.errors }}
+          <div class="form-group input-group ">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            {{ form.password }}
+          </div>
+          {{ form.password.errors }}
+          <!-- Button -->
+          <div class="row" align="right">
+              <input type="submit" class="btn btn-success" value="Войти">
+              <a href="#" class="btn btn-primary">Facebook</a>
+          </div>
+          <div class="row">Нет аккаунта? <a href="{% url 'registration' %}">Регистрируйся здесь</a></div>
+          <!-- Button -->
+        </form> 
+      </div>    
+    </div>                     
+  </div>  
+</div>
+<!-- Тут идет блок авторизации -->
 {% endblock %}

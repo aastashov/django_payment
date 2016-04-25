@@ -5,7 +5,7 @@ from transactions.models import Transactions
 from forms import PayForm, DepositForm
 
 
-def pay(request, prov_id):
+def pay(request, prov_id=None):
     message = ''
     prov = Providers.objects.get(pk=prov_id)
     if not request.user.is_anonymous():
@@ -41,18 +41,20 @@ def pay(request, prov_id):
 
 
 def deposit(request):
-    deposit = Transactions.objects.filter(user_id=request.user.profile.account, amount__gte=0).order_by('-create_at')
-    form = DepositForm(request.POST or None)
-    if form.is_valid():
-        deposit = form.save(commit=False)
-        deposit.user = request.user.profile
-        # В дальнейшем здесь будет платежная система, через которую проводилось пополнение
-        deposit.provider = Providers.objects.get(name='PaymentSystem')
-        deposit.props = request.user.profile.account
-        deposit.save()
-        # Здесь нужно рендерить страницу с успешной транзакцией
-        return redirect('deposit')
-    return render(request, 'deposit.html', {
-            'form': form,
-            'deposit': deposit,
-        })
+    if request.user.is_authenticated():
+        deposit = Transactions.objects.filter(user_id=request.user.profile.account, amount__gte=0).order_by('-create_at')
+        form = DepositForm(request.POST or None)
+        if form.is_valid():
+            deposit = form.save(commit=False)
+            deposit.user = request.user.profile
+            # В дальнейшем здесь будет платежная система, через которую проводилось пополнение
+            deposit.provider = Providers.objects.get(name='PaymentSystem')
+            deposit.props = request.user.profile.account
+            deposit.save()
+            # Здесь нужно рендерить страницу с успешной транзакцией
+            return redirect('deposit')
+        return render(request, 'deposit.html', {
+                'form': form,
+                'deposit': deposit,
+            })
+    return redirect('home')

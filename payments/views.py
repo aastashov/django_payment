@@ -4,16 +4,16 @@ from models import Providers, Category
 
 
 def provider_list(request, slug='all'):
-    if 'all' in slug:
-        provider_list = Providers.objects.filter(display=True)
-        category = 'Все провайдеры'
-    elif 'bookmarks' in slug:
-        provider_list = request.user.profile.bookmarks.filter(display=True)
-        category = 'Мои закладки'
-    else:
-        category = Category.objects.get(slug=slug)
-        provider_list = Providers.objects.filter(category=category)
     category_list = Category.objects.filter(display=True).order_by('title')
+    if request.user.is_authenticated() and ('bookmarks' in slug):
+        category = 'Мои закладки'
+        provider_list = request.user.profile.bookmarks.filter(display=True)
+    elif category_list.filter(slug=slug):
+        category = Category.objects.get(slug=slug)
+        provider_list = Providers.objects.filter(category=category, display=True)
+    else:
+        category = 'Все провайдеры'
+        provider_list = Providers.objects.filter(display=True)
     return render(request, 'providers_list.html', {
         'provider': provider_list, 'category_list': category_list, 'category': category
     })
