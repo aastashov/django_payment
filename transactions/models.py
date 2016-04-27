@@ -6,7 +6,7 @@ import random
 
 STATUS_SHOICES = (
     ('success', 'Оплачено'),
-    ('canceled', 'Отменена платежа'),
+    ('canceled', 'Отменено'),
     ('revert', 'Запрос на возврат'),
     ('wait', 'Ожидает оплаты'),
 )

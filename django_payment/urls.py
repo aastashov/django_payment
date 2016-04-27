@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^template/$', profiles_views.template),
 
     url(r'user/messages/$', messages_views.messages, name='messages'),
+    url(r'user/messages/create/(?P<prov_id>\S+)$', messages_views.create_chat, name='create_chat'),
     url(r'user/messages/chat/(?P<token>\S+)/$', messages_views.view_chat, name='chat'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

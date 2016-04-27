@@ -6,12 +6,12 @@
       <hr>
       <div class="row">
         {% for cat in category %}
-        <div class="col-lg-3 col-md-4 col-sm-12">
+        <div class="col-lg-2 col-md-3 col-sm-4">
           <a href="{% url 'category' cat.slug %}">
             <div class="thumbnail">
               <img src="{{ cat.img.url }}" alt="{{ cat.img.title }}">
               <div class="caption" align="center">
-                <h3>{{ cat.title }}</h3>
+                <p>{{ cat.title }}</p>
               </div>
             </div>
           </a>

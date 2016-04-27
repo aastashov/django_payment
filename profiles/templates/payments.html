@@ -19,16 +19,48 @@
                   <td>Реквизит</td>
                   <td>Чек №</td>
                   <td>Статус</td>
+                  <td>Действие</td>
               </tr>
               {% for pay in payments %}
-              <tr>
+              <tr align="center">
                   <td>{{ pay.create_at }}</td>
                   <td>{{ pay.provider.name }}</td>
                   <td>{{ pay.amount }}</td>
                   <td>{{ pay.props }}</td>
                   <td>{{ pay.number }}</td>
-                  <td>{{ pay.get_status_display }}</td>
-              </tr>
+                  {% if 'success' in pay.status %}
+                  <td>
+                    {{ pay.get_status_display }}
+                  </td>
+                  <td>
+                    <a href="">Отменить платеж</a>
+                  </td>
+                  {% elif 'wait' in pay.status %}
+                  <td>
+                    {{ pay.get_status_display }}
+                  </td>
+                  <td>
+                    <a href="">Отменить платеж</a>
+                  </td>
+                  {% elif 'revert' in pay.status %}
+                  <td>
+                    {{ pay.get_status_display }}
+                  </td>
+                  <td>
+                    <a href="">Отменить запрос</a>
+                  </td>
+                  {% elif 'canceled' in pay.status %}
+                  <td>
+                    {{ pay.get_status_display }}
+                  </td>
+                  <td>
+                    {% if pay.amount < 0 %}
+                    <a href="{% url 'pay' pay.provider.id %}">Оплатить снова</a>
+                    {% else %}
+                    <a href="{% url 'deposit' %}">Пополнить снова</a>
+                    {% endif %}
+                  </td>
+                  {% endif %}
               {% endfor %}
             </table>
           </div>
