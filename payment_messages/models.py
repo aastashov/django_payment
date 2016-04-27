@@ -10,9 +10,9 @@ STATUS_CHOISES = (
 
 
 class Chat(models.Model):
-    provider = models.ForeignKey(Providers, verbose_name='Получатель')
+    provider = models.ForeignKey(Providers, verbose_name='Провайдер')
+    user = models.ForeignKey(User, verbose_name='Пользователь')
     token = models.IntegerField('Номер обращения', unique=True)
-    title = models.CharField('Тема обращения', max_length=50)
     status = models.BooleanField('Статус чата', default=True, choices=STATUS_CHOISES)
     created_at = models.DateTimeField('Дата обращения', auto_now_add=True)
 

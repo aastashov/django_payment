@@ -7,7 +7,7 @@ class AdminMessage(admin.TabularInline):
 
 
 class AdminChat(admin.ModelAdmin):
-    list_display = ('title', 'token', 'created_at')
+    list_display = ('token', 'created_at')
     inlines = [AdminMessage]
     list_filter = ('created_at',)
     search_fields = ('token',)

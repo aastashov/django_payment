@@ -1,6 +1,6 @@
 # coding: utf-8
 from django import forms
-from payment_messages.models import Message, Chat
+from payment_messages.models import Message
 
 
 class MessageForm(forms.ModelForm):
@@ -11,15 +11,4 @@ class MessageForm(forms.ModelForm):
         ]
         widgets = {
             'text': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),
-        }
-
-
-class ChatForm(forms.ModelForm):
-    class Meta():
-        model = Chat
-        fields = [
-            'title',
-        ]
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Тема обращения'}),
         }
