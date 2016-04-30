@@ -11,35 +11,7 @@
   <div class="col-lg-8 col-md-9 col-sm-12">
     <div class="panel panel-default">
 <!-- Dialog -->
-      <div class="panel-body">
-        <div class="row container-fluid" style="height:500px; overflow:auto;">
-          {% for message in messages %}
-            {% if user == message.sender %}
-            <div class="row" align="right">
-              <div class="col-md-10 col-xs-10">
-                <p>{{ message.sender }} • {{ message.created_at }}</p>
-                <p>{{ message.text }}</p>
-              </div>
-              <div class="col-md-2 col-xs-2">
-                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive">
-              </div>
-            </div>
-            {% else %}
-            <div class="row" align="left">
-              <div class="col-md-2 col-xs-2">
-                <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class="img-responsive">
-              </div>
-              <div class="col-md-10 col-xs-10">
-                <p>{{ message.sender }} • {{ message.created_at }}</p>
-                <p>{{ message.text }}</p>
-              </div>
-            </div>
-            {% endif %}
-            <hr>
-          {% endfor %}
-          <span id="end"></span>
-        </div>
-      </div>
+    {% include 'dialog.html' %}
 <!-- End dialog -->
 <!-- Answer -->
       <div class="panel-footer container-fluid">
@@ -50,9 +22,9 @@
           </div>
           <div class="col-md-2 col-xs-2">
           {% if chat.status == true %}
-            <button class="btn btn-primary deactiv" disabled="disabled">Ответить <span class="glyphicon glyphicon-send"></span></button>
+            <button class="btn btn-primary deactiv" disabled="disabled">Отправить <span class="glyphicon glyphicon-send"></span></button>
           {% else %}
-            <button class="btn btn-primary deactiv">Ответить <span class="glyphicon glyphicon-send"></span></button>
+            <button class="btn btn-primary deactiv">Отправить <span class="glyphicon glyphicon-send"></span></button>
           {% endif %}
           </div>
         </form>
@@ -69,8 +41,5 @@ window.onload = function()
 {
     document.getElementById('end').scrollIntoView(true);
 }
-  // $(document).ready(function(){
-  // $(#chat).scrollTop(1000);
-  // });
 </script>
 {% endblock %}

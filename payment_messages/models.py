@@ -17,7 +17,7 @@ class Chat(models.Model):
     created_at = models.DateTimeField('Дата обращения', auto_now_add=True)
 
     def __unicode__(self):
-        return self.title
+        return str(self.token)
 
 
 class Message(models.Model):
