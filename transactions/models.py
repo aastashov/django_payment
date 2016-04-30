@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.db import models
-from payments.models import Providers
+from payments.models import Provider
 from profiles.models import Profile
 import random
 
@@ -26,7 +26,7 @@ class Transactions(models.Model):
         related_name='transactions',
     )
     provider = models.ForeignKey(
-        Providers,
+        Provider,
         verbose_name='Л/С провайдера',
         to_field='account',
     )

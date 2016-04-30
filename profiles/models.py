@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from payments.models import Providers
+from payments.models import Provider
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import random
@@ -13,8 +13,9 @@ class Profile(models.Model):
     last_name = models.CharField('Фамилия пользователя', max_length=100, blank=True)
     account = models.IntegerField('Л/С пользователя', unique=True, editable=False, null=True)
     avatar = models.ImageField('Аватар пользователя', upload_to='media/image/uploads_avatar', blank=True)
-    bookmarks = models.ManyToManyField(Providers, blank=True, verbose_name='Закладки')
+    bookmarks = models.ManyToManyField(Provider, blank=True, verbose_name='Закладки')
     phone = models.CharField('Номер абонента', max_length=13, blank=True)
+    # new_message = models.IntegerField('Новых сообщений', default=0)
 
     def __unicode__(self):
         return self.user.username

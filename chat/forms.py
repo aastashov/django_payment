@@ -1,14 +1,14 @@
 # coding: utf-8
 from django import forms
-from payment_messages.models import Message
+from chat.models import Message
 
 
 class MessageForm(forms.ModelForm):
     class Meta():
         model = Message
         fields = [
-            'text',
+            'message',
         ]
         widgets = {
-            'text': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),
         }

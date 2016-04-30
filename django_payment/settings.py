@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'profiles',
     'transactions',
     'debug_toolbar',
-    'payment_messages',
+    'chat',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'django_payment.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_payments',
+        'NAME': 'django_payment',
         'PASSWORD': '1221',
         'USER': 'root',
     }

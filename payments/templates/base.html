@@ -41,8 +41,8 @@
             <li><a>Баланс: {{ user.profile.get_balance }}с</a></li>
             <li>
               <a>Л/С: 
-                {% if user.providers %}
-                {{ user.providers.account }}
+                {% if user.provider %}
+                {{ user.provider.account }}
                 {% else %}
                 {{ user.profile.account }}
                 {% endif %}
@@ -61,9 +61,9 @@
                   <li><a href="/admin/"><i class="glyphicon glyphicon-wrench"></i> Админ панель</a></li>
                 {% endif %}
                 <li><a href="{% url 'profile' %}"><i class="glyphicon glyphicon-cog"></i> Личный кабинет</a></li>
-                <li><a href="{% url 'messages' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
+                <li><a href="{% url 'chat_list' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
                 <li><a href="{% url 'deposit' %}"><i class="glyphicon glyphicon-usd"></i> Пополнить счет</a></li>
-                {% if not user.providers %}
+                {% if not user.provider %}
                 <li><a href="{% url 'category' 'bookmarks' %}"><i class="glyphicon glyphicon-bookmark"></i> Мои закладки ({{ user.profile.count_bookmarks }})</a></li>
                 {% endif %}
                 <li><a href="{% url 'my_payments' %}"><i class="glyphicon glyphicon-list-alt"></i> История транзакций</a></li>

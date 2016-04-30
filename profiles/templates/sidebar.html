@@ -1,13 +1,13 @@
           <ul class="nav nav-pills nav-stacked" data-spy="affix">
-            {% if user.providers %}
+            {% if user.provider %}
             <li><a href="{% url 'my_payments' %}"><i class="glyphicon glyphicon-list-alt"></i> Все платежи</a></li>
-            <li><a href="{% url 'messages' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
+            <li><a href="{% url 'chat_list' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
             <li><a href="#"><span class="glyphicon glyphicon-th"></span> Выгрузка</a></li>
             <li><a href="{% url 'profile' %}"><i class="glyphicon glyphicon-cog"></i> Настройки</a></li>
             <li><a href="{% url 'profile_provider' %}"><i class="glyphicon glyphicon-wrench"></i> Настройки провайдера</a></li>
             {% else %}
             <li><a href="{% url 'my_payments' %}"><i class="glyphicon glyphicon-list-alt"></i> Мои платежи</a></li>
-            <li><a href="{% url 'messages' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
+            <li><a href="{% url 'chat_list' %}"><i class="glyphicon glyphicon-comment"></i> Чаты</a></li>
             <li><a href="{% url 'deposit' %}"><i class="glyphicon glyphicon-usd"></i> Пополнить счет</a></li>
             <li><a href="{% url 'category' 'bookmarks' %}"><i class="glyphicon glyphicon-bookmark"></i> Мои закладки</a></li>
             <li><a href="{% url 'home' %}"><i class="glyphicon glyphicon-list"></i> Категории услуг</a></li>

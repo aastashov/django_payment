@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Тут идет блок для контента -->
+<div class="row">
+  <div class="col-lg-2 col-md-3 col-sm-12">
+    {% include 'sidebar.html' %}
+  </div>
+  <div class="col-lg-8 col-md-9 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-body"><h4><span class="glyphicon glyphicon-comment"></span> Чат с {{ provider }}</h4></div>
+<!-- Dialog -->
+      <div class="panel-body">
+        <div class="row container-fluid" style="height:400px; overflow:auto;">
+          {% for msg in messages %}
+            {% if user == msg.sender %}
+            <div class="row" align="right">
+              <div class="col-md-10 col-xs-10">
+                <p>{{ msg.sender }} • {{ msg.created_at }}</p>
+                <p>{{ msg.message }}</p>
+              </div>
+              <div class="col-md-2 col-xs-2">
+                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive">
+              </div>
+            </div>
+            {% else %}
+            <div class="row" align="left">
+              <div class="col-md-2 col-xs-2">
+                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive">
+              </div>
+              <div class="col-md-10 col-xs-10">
+                <p>{{ msg.sender }} • {{ msg.created_at }}</p>
+                <p>{{ msg.message }}</p>
+              </div>
+            </div>
+            {% endif %}
+            <hr>
+          {% endfor %}
+          <span id="end"></span>
+        </div>
+      </div>
+<!-- End dialog -->
+<!-- Answer -->
+      <div class="panel-footer container-fluid">
+        <form role="form" method="POST">
+          {% csrf_token %}
+          <div class="col-md-10 col-xs-10">
+            {{ form.message }}
+          </div>
+          <div class="col-md-2 col-xs-2">
+            <button class="btn btn-primary deactiv">Отправить <span class="glyphicon glyphicon-send"></span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-2 col-md-12 col-sm-12 well">
+    <p>Предыдущие чаты с данным провайдером</p>
+    <p>Если ты их не видишь, значит ты гей! <img src="https://vk.com/images/emoji/D83DDE04.png" alt=""></p>
+  </div>
+</div>
+<script type="text/javascript">
+window.onload = function()
+{
+    document.getElementById('end').scrollIntoView(true);
+}
+</script>
+{% endblock %}

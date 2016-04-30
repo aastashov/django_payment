@@ -3,12 +3,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm, ProviderForm
 from transactions.models import Transactions
-from payments.models import Providers
+from payments.models import Provider
 
 
 def profile_provider(request):
     if request.user.is_authenticated():
-        form = ProviderForm(request.POST or None, request.FILES or None, instance=request.user.providers)
+        form = ProviderForm(request.POST or None, request.FILES or None, instance=request.user.Provider)
         if request.POST:
             if form.is_valid():
                 form.save()
@@ -64,7 +64,7 @@ def my_payments(request):
 
 def bookmark(request, prov_id=None):
     if request.user.is_authenticated():
-        prov = Providers.objects.get(pk=prov_id)
+        prov = Provider.objects.get(pk=prov_id)
         if prov in request.user.profile.bookmarks.all():
             request.user.profile.bookmarks.remove(prov_id)
         else:

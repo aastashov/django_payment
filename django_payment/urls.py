@@ -3,7 +3,7 @@ from django.contrib import admin
 from payments import views
 from profiles import views as profiles_views
 from transactions import views as transactions_views
-from payment_messages import views as messages_views
+from chat import views as messages_views
 from django.conf import settings
 from django.conf.urls.static import static
 import debug_toolbar
@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^pay/(?P<prov_id>\S+)/$', transactions_views.pay, name='pay'),
     url(r'^template/$', profiles_views.template),
 
-    url(r'user/messages/$', messages_views.messages, name='messages'),
-    url(r'user/messages/create/(?P<prov_id>\S+)$', messages_views.create_chat, name='create_chat'),
-    url(r'user/messages/chat/(?P<token>\S+)/$', messages_views.view_chat, name='chat'),
+    url(r'user/chat/list/$', messages_views.chat_list, name='chat_list'),
+    url(r'user/chat/create/(?P<prov_id>\S+)/$', messages_views.chat_create, name='chat_create'),
+    url(r'user/chat/(?P<chat_id>\S+)/$', messages_views.chat, name='chat'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
