@@ -16,18 +16,16 @@
           <td>Провайдер</td>
           <td>Тема обращения</td>
           <td>Дата создания</td>
-          <td>Новых сообщений</td>
         </tr>
         {% for chat in chats %}
         <tr>
-          <td>Сюда как то нужно вытащить провайдера</td>
+          <td>{{ provider }}</td>
           <td>
             <a href="{% url 'chat' chat.id %}">
               {{ chat.title }}
             </a>
           </td>
           <td>Дата первого сообщения</td>
-          <td>{{ chat.new_message }}</td>
         </tr>
         {% endfor %}
       </table>

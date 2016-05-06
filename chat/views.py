@@ -7,16 +7,17 @@ from payments.models import Provider
 
 def chat_list(request):
     if request.user.is_authenticated():
-        chats = Chat.objects.filter(users=request.user.id, status=True).order_by('-new_message')
-        return render(request, 'chat_list.html', {'chats': chats})
+        chats = Chat.objects.filter(users=request.user.id, status=True)
+        return render(request, 'chat_list.html', {
+            'chats': chats,
+        })
     return redirect('login')
 
 
 def chat(request, chat_id):
     if request.user.is_authenticated():
         chat = Chat.objects.get(pk=chat_id)
-        provider = Provider.objects.get(manager=chat.users.all()[1])
-
+        print Provider.objects.get(manager=chat.users.all()[1])
         messages = Message.objects.filter(chat=chat_id)
         form = MessageForm(request.POST or None)
         if form.is_valid():
@@ -24,7 +25,10 @@ def chat(request, chat_id):
             message.chat = chat
             message.sender = request.user
             message.save()
-        return render(request, 'chat.html', {'messages': messages, 'provider': provider, 'form': form})
+        return render(request, 'chat.html', {
+            'messages': messages,
+            'form': form,
+        })
     return redirect('login')
 
 
@@ -40,5 +44,8 @@ def chat_create(request, prov_id):
             msg.sender = request.user
             msg.save()
             return redirect('chat', chat.id)
-        return render(request, 'chat_create.html', {'message_form': message_form, 'provider': prov})
+        return render(request, 'chat_create.html', {
+            'message_form': message_form,
+            'provider': prov,
+        })
     return redirect('login')

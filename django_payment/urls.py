@@ -10,6 +10,7 @@ import debug_toolbar
 
 
 urlpatterns = [
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'^$', views.category_list, name='home'),

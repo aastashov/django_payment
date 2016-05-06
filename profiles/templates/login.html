@@ -26,8 +26,10 @@
           {{ form.password.errors }}
           <!-- Button -->
           <div class="row" align="right">
-              <input type="submit" class="btn btn-success" value="Войти">
-              <a href="#" class="btn btn-primary">Facebook</a>
+              {% load socialaccount %}
+                {% providers_media_js %}
+                <input type="submit" class="btn btn-success" value="Войти">
+                <a class="btn btn-primary" href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook</a>
           </div>
           <div class="row">Нет аккаунта? <a href="{% url 'registration' %}">Регистрируйся здесь</a></div>
           <!-- Button -->
