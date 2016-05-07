@@ -17,7 +17,7 @@ def chat_list(request):
 def chat(request, chat_id):
     if request.user.is_authenticated():
         chat = Chat.objects.get(pk=chat_id)
-        print Provider.objects.get(manager=chat.users.all()[1])
+        # print Provider.objects.get(manager=chat.users.all()[1])
         messages = Message.objects.filter(chat=chat_id)
         form = MessageForm(request.POST or None)
         if form.is_valid():
