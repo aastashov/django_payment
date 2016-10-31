@@ -26,11 +26,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'payments',
     'profiles',
     'transactions',
     'debug_toolbar',
-    'payment_messages',
+    'chat',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -72,7 +77,7 @@ WSGI_APPLICATION = 'django_payment.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_payments',
+        'NAME': 'django_payment',
         'PASSWORD': '1221',
         'USER': 'root',
     }
@@ -119,3 +124,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ROOT_URLCONF = 'django_payment.urls'
+
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of allauth
+    'django.contrib.auth.backends.ModelBackend',
+
+    # allauth specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignupForm'

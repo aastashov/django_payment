@@ -14,13 +14,13 @@ class Category(models.Model):
         return self.title
 
 
-class Providers(models.Model):
+class Provider(models.Model):
     name = models.CharField(u'Имя провайдера', max_length=20)
     img = models.ImageField(u'Лого', upload_to='media/image/uploads_provider/')
     account = models.IntegerField(u'Л/С провайдера', unique=True, editable=False, blank=True)
     description = models.TextField(u'О провайдере')
     display = models.BooleanField(u'Включить/Отключить', default=False)
-    category = models.ForeignKey(Category, verbose_name='Категорияы')
+    category = models.ForeignKey(Category, verbose_name='Категория')
     manager = models.OneToOneField(User, verbose_name='Профайл провайдера', blank=True, null=True)
 
     def save(self):
@@ -31,10 +31,10 @@ class Providers(models.Model):
             if max_try == 0:
                 # Send email to admin
                 break
-            if Providers.objects.filter(account=self.account).count() == 0:
+            if Provider.objects.filter(account=self.account).count() == 0:
                 not_unique_number = False
             max_try -= 1
-        super(Providers, self).save()
+        super(Provider, self).save()
 
     def __unicode__(self):
         return self.name

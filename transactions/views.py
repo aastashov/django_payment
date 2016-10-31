@@ -1,13 +1,13 @@
 # coding: utf-8
 from django.shortcuts import render, redirect
-from payments.models import Providers
+from payments.models import Provider
 from transactions.models import Transactions
 from forms import PayForm, DepositForm
 
 
 def pay(request, prov_id=None):
     message = ''
-    prov = Providers.objects.get(pk=prov_id)
+    prov = Provider.objects.get(pk=prov_id)
     if not request.user.is_anonymous():
         auth_user = request.user.profile.account
         payments = Transactions.objects.filter(user_id=auth_user, provider=prov.account).order_by('-create_at')
@@ -48,7 +48,7 @@ def deposit(request):
             deposit = form.save(commit=False)
             deposit.user = request.user.profile
             # В дальнейшем здесь будет платежная система, через которую проводилось пополнение
-            deposit.provider = Providers.objects.get(name='PaymentSystem')
+            deposit.provider = Provider.objects.get(name='PaymentSystem')
             deposit.props = request.user.profile.account
             deposit.save()
             # Здесь нужно рендерить страницу с успешной транзакцией

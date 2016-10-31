@@ -2,23 +2,25 @@
 
 {% block content %}
 <!-- Тут идет блок для контента -->
-<h3><span class="glyphicon glyphicon-comment"></span> Чат с {{ provider.name }}</h3>
-<hr>
 <div class="row">
   <div class="col-lg-2 col-md-3 col-sm-12">
     {% include 'sidebar.html' %}
   </div>
   <div class="col-lg-8 col-md-9 col-sm-12">
     <div class="panel panel-default">
+      <div class="panel-body"><h4><span class="glyphicon glyphicon-comment"></span> Чат с {{ provider.name }}</h4></div>
 <!-- Dialog -->
-    {% include 'dialog.html' %}
+      <div class="panel-body">
+        <div class="row container-fluid" style="height:400px; overflow:auto;">
+        </div>
+      </div>
 <!-- End dialog -->
 <!-- Answer -->
       <div class="panel-footer container-fluid">
         <form role="form" method="POST">
           {% csrf_token %}
           <div class="col-md-10 col-xs-10">
-            {{ message_form.text }}
+            {{ message_form.message }}
           </div>
           <div class="col-md-2 col-xs-2">
             <button class="btn btn-primary deactiv">Создать <span class="glyphicon glyphicon-send"></span></button>

@@ -13,21 +13,19 @@
       <div class="panel-heading">Все чаты</div>
       <table class="table table-striped">
         <tr>
-          <td>№</td>
+          <td>Провайдер</td>
           <td>Тема обращения</td>
           <td>Дата создания</td>
-          <td>Статус чата</td>
         </tr>
         {% for chat in chats %}
         <tr>
-          <td>{{ chat.token }}</td>
+          <td>{{ provider }}</td>
           <td>
-            <a href="{% url 'chat' chat.token %}">
-              {{ chat.token }}
+            <a href="{% url 'chat' chat.id %}">
+              {{ chat.title }}
             </a>
           </td>
-          <td>{{ chat.created_at }}</td>
-          <td>{{ chat.get_status_display }}</td>
+          <td>Дата первого сообщения</td>
         </tr>
         {% endfor %}
       </table>
@@ -35,8 +33,8 @@
   </div>
   <div class="col-lg-2 col-md-12 col-sm-12">
     <div class="col-lg-2 col-md-5 col-sm-12 well" data-spy="affix">
-      <p>Предыдущие чаты с данным провайдером</p>
-      <p>Если ты их не видишь, значит ты гей! <img src="https://vk.com/images/emoji/D83DDE04.png" alt=""></p>
+      <p class="well">Календарь<br>(фильтр по датам)</p>
+      <p class="well">Список провайдеров с которыми были чаты</p>
     </div>
   </div>
 </div>

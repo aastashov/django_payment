@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.shortcuts import render
-from models import Providers, Category
+from models import Provider, Category
 
 
 def provider_list(request, slug='all'):
@@ -10,10 +10,10 @@ def provider_list(request, slug='all'):
         provider_list = request.user.profile.bookmarks.filter(display=True)
     elif category_list.filter(slug=slug):
         category = Category.objects.get(slug=slug)
-        provider_list = Providers.objects.filter(category=category, display=True)
+        provider_list = Provider.objects.filter(category=category, display=True)
     else:
         category = 'Все провайдеры'
-        provider_list = Providers.objects.filter(display=True)
+        provider_list = Provider.objects.filter(display=True)
     return render(request, 'providers_list.html', {
         'provider': provider_list, 'category_list': category_list, 'category': category
     })
