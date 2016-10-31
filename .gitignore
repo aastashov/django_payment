@@ -2,3 +2,6 @@
 ./.idea
 media/image/uploads_category/*
 media/image/uploads_provider/*
+Иконки\ провайдеров/
+!media/image/uploads_category/PaymentSystem.jpg
+!media/image/uploads_provider/PaymentSystem.jpg
