@@ -10,5 +10,5 @@ class MessageForm(forms.ModelForm):
             'message',
         ]
         widgets = {
-            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': '2'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'rows': '2', 'autofocus': ''}),
         }

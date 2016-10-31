@@ -8,30 +8,24 @@
   <div class="col-lg-2 col-md-3 col-sm-12">
     {% include 'sidebar.html' %}
   </div>
-  <div class="col-lg-8 col-md-9 col-sm-12">
+  <div class="col-lg-7 col-md-9 col-sm-12">
     <div class="panel panel-primary">
       <div class="panel-heading">Все чаты</div>
       <table class="table table-striped">
-        <tr>
-          <td>Провайдер</td>
-          <td>Тема обращения</td>
-          <td>Дата создания</td>
-        </tr>
         {% for chat in chats %}
         <tr>
-          <td>{{ provider }}</td>
           <td>
             <a href="{% url 'chat' chat.id %}">
               {{ chat.title }}
             </a>
           </td>
-          <td>Дата первого сообщения</td>
+          <td><a href="{% url 'chat_remove' chat.id %}"><i class="glyphicon glyphicon-remove"></i></a></td>
         </tr>
         {% endfor %}
       </table>
     </div>
   </div>
-  <div class="col-lg-2 col-md-12 col-sm-12">
+  <div class="col-lg-3 col-md-12 col-sm-12">
     <div class="col-lg-2 col-md-5 col-sm-12 well" data-spy="affix">
       <p class="well">Календарь<br>(фильтр по датам)</p>
       <p class="well">Список провайдеров с которыми были чаты</p>

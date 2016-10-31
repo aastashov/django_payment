@@ -7,7 +7,7 @@ class AdminMessage(admin.TabularInline):
 
 
 class AdminChat(admin.ModelAdmin):
-    list_display = ('title', 'status')
+    list_display = ('title', 'status', 'provider')
     inlines = [AdminMessage]
 
 

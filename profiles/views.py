@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, logout, login
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm, ProviderForm
 from transactions.models import Transactions
 from payments.models import Provider
+from django.http import HttpResponse
+import json
 
 
 def profile_provider(request):
@@ -74,7 +76,11 @@ def bookmark(request, prov_id=None):
 
 
 def template(request):
-    form = RegistrationForm(request.POST or None)
-    if form.is_valid():
-        pass
-    return render(request, 'template.html', {'form': form})
+    if request.method == 'GET' and request.is_ajax():
+        name = request.GET.get('name')
+        name += name
+        print name
+        return HttpResponse(json.dumps({'name': name}), content_type="application/json")
+    else:
+        print u'Что-то пошло не так'
+    return render(request, 'template.html')

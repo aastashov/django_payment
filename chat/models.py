@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.db import models
 from django.contrib.auth.models import User
+from payments.models import Provider
 # from django.db.models.signals import post_save, pre_init
 # from django.dispatch import receiver
 
@@ -9,6 +10,7 @@ class Chat(models.Model):
     title = models.CharField('Тема', max_length=50)
     users = models.ManyToManyField(User, verbose_name='Участники чата')
     status = models.BooleanField('Отображение чата', default=True)
+    provider = models.ForeignKey(Provider, verbose_name='Провайдер', blank=True, null=True)
 
     def __unicode__(self):
         return unicode(self.title) or u''

@@ -17,7 +17,6 @@ def chat_list(request):
 def chat(request, chat_id):
     if request.user.is_authenticated():
         chat = Chat.objects.get(pk=chat_id)
-        # print Provider.objects.get(manager=chat.users.all()[1])
         messages = Message.objects.filter(chat=chat_id)
         form = MessageForm(request.POST or None)
         if form.is_valid():
@@ -28,8 +27,14 @@ def chat(request, chat_id):
         return render(request, 'chat.html', {
             'messages': messages,
             'form': form,
+            'chat': chat,
         })
     return redirect('login')
+
+
+def chat_remove(request, chat_id):
+    Chat.objects.get(pk=chat_id).delete()
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def chat_create(request, prov_id):
@@ -40,6 +45,8 @@ def chat_create(request, prov_id):
             msg = message_form.save(commit=False)
             chat = Chat.objects.create(title=msg.message)
             chat.users.add(request.user.id, prov.manager.id)
+            chat.provider = prov
+            chat.save()
             msg.chat = chat
             msg.sender = request.user
             msg.save()

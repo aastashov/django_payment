@@ -21,7 +21,7 @@ class Provider(models.Model):
     description = models.TextField(u'О провайдере')
     display = models.BooleanField(u'Включить/Отключить', default=False)
     category = models.ForeignKey(Category, verbose_name='Категория')
-    manager = models.OneToOneField(User, verbose_name='Профайл провайдера', blank=True, null=True)
+    manager = models.ForeignKey(User, verbose_name='Профайл провайдера', blank=True, null=True, default=1)
 
     def save(self):
         max_try = 100

@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^pay/(?P<prov_id>\S+)/$', transactions_views.pay, name='pay'),
     url(r'^template/$', profiles_views.template),
 
+    url(r'user/chat/remove/(?P<chat_id>\S+)/$', messages_views.chat_remove, name='chat_remove'),
     url(r'user/chat/list/$', messages_views.chat_list, name='chat_list'),
     url(r'user/chat/create/(?P<prov_id>\S+)/$', messages_views.chat_create, name='chat_create'),
     url(r'user/chat/(?P<chat_id>\S+)/$', messages_views.chat, name='chat'),

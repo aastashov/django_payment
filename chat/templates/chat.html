@@ -8,7 +8,7 @@
   </div>
   <div class="col-lg-8 col-md-9 col-sm-12">
     <div class="panel panel-default">
-      <div class="panel-body"><h4><span class="glyphicon glyphicon-comment"></span> Чат с "Имя провайдера"</h4></div>
+      <div class="panel-body"><h4><span class="glyphicon glyphicon-comment"></span> Чат с {{ chat.provider }}</h4></div>
 <!-- Dialog -->
       <div class="panel-body">
         <div class="row container-fluid" style="height:400px; overflow:auto;">
@@ -20,13 +20,13 @@
                 <p>{{ msg.message }}</p>
               </div>
               <div class="col-md-2 col-xs-2">
-                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive">
+                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive img-circle">
               </div>
             </div>
             {% else %}
             <div class="row" align="left">
               <div class="col-md-2 col-xs-2">
-                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive">
+                <img src="/media/media/image/uploads_avatar/user.jpg" class="img-responsive img-circle">
               </div>
               <div class="col-md-10 col-xs-10">
                 <p>{{ msg.sender }} • {{ msg.created_at }}</p>

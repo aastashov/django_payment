@@ -27,7 +27,7 @@
           <!-- Button -->
           <div class="row" align="right">
               {% load socialaccount %}
-                {% providers_media_js %}
+                {# {% providers_media_js %} #}
                 <input type="submit" class="btn btn-success" value="Войти">
                 <a class="btn btn-primary" href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook</a>
           </div>
