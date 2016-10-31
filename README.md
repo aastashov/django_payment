@@ -1,25 +1,19 @@
 # django_payment
 
-Как начать работу:
+Создай БД:
+create database django_payments character set utf8 collate utf8_general_ci;
 
-Установить все что нужно для джанги:
-sudo apt-get install python-dev python-pip libmysqlclient-dev mysql-server virtualenv
+Если забыл, то поставь
+sudo apt-get install python-dev python-pip libmysqlclient-dev mysql-server
 
-Это для Pillow:
+Это для Pillow (Ubuntu 14.04)
 sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev \
-     libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+    liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
 
-Создать виртуальное окружение:
-virtualenv name_env
+Если нужно, то поставь virtualenvwrapper:
+sudo pip install virtualenvwrapper
 
-Зайти в виртульное окружение:
-source name_env/bin/activated
-
-Установить нужные пакеты для этого проекта:
+Под виртуальным окружением, установи зависимости:
 pip install -r requirements.txt
 
-Если будет ругаться на что-то вроде "Command "python setup.py egg_info" failed with error code 1....",
-то попробуй:
-pip install --upgrade setuptools
-и заново:
-pip install -r requirements.txt
+Если будет ругаться на что-то, то ЧИТАЙ и гугл в помощь
