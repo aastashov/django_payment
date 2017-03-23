@@ -1,46 +1,46 @@
 # coding: utf-8
-from django.shortcuts import render, redirect
+from __future__ import unicode_literals
+
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+
 from forms import ProfileForm, RegistrationForm, UserAuthenticationForm, ProviderForm
 from transactions.models import Transactions
 from payments.models import Provider
-from django.http import HttpResponse
-import json
 
 
+
+@login_required
 def profile_provider(request):
-    if request.user.is_authenticated():
-        form = ProviderForm(request.POST or None, request.FILES or None, instance=request.user.Provider)
-        if request.POST:
-            if form.is_valid():
-                form.save()
-        return render(request, 'profile_provider.html', {'form': form})
-    return redirect('login')
+    form = ProviderForm(request.POST or None, request.FILES or None, instance=request.user.Provider)
+    if request.POST and form.is_valid():
+        form.save()
+    return render(request, 'profile_provider.html', {'form': form})
 
 
+@login_required
 def profile(request):
-    if request.user.is_authenticated():
-        form = ProfileForm(request.POST or None, request.FILES or None, instance=request.user.profile)
-        if request.POST:
-            if form.is_valid():
-                form.save()
-        return render(request, 'profile_user.html', {'form': form})
-    return redirect('login')
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=request.user.profile)
+    if request.POST and form.is_valid():
+        form.save()
+    return render(request, 'profile_user.html', {'form': form})
 
 
+@login_required
 def user_login(request):
-    if not request.user.is_authenticated():
-        form = UserAuthenticationForm(data=request.POST or None)
-        if form.is_valid():
-            login(request, form.get_user())
-            return redirect('home')
-        return render(request, 'login.html', {'form': form})
-    return redirect('home')
+    form = UserAuthenticationForm(data=request.POST or None)
+    if form.is_valid():
+        login(request, form.get_user())
+        return redirect('home')
+    return render(request, 'login.html', {'form': form})
 
 
+@login_required
 def user_logout(request):
     logout(request)
-    return redirect(request.META['HTTP_REFERER'])
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
 def registration(request):
@@ -55,24 +55,22 @@ def registration(request):
     return render(request, 'registration.html', {'form': form})
 
 
+@login_required
 def my_payments(request):
-    if request.user.is_authenticated():
-        payments = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
-        return render(request, 'payments.html', {
-            'payments': payments,
-        })
-    return redirect('login')
+    payments = Transactions.objects.filter(user_id=request.user.profile.account).order_by('-create_at')
+    return render(request, 'payments.html', {
+        'payments': payments,
+    })
 
 
-def bookmark(request, prov_id=None):
-    if request.user.is_authenticated():
-        prov = Provider.objects.get(pk=prov_id)
-        if prov in request.user.profile.bookmarks.all():
-            request.user.profile.bookmarks.remove(prov_id)
-        else:
-            request.user.profile.bookmarks.add(prov_id)
-        return redirect(request.META['HTTP_REFERER'])
-    return redirect('login')
+@login_required
+def bookmark(request, prov_id):
+    prov = Provider.objects.get(pk=prov_id)
+    if prov in request.user.profile.bookmarks.all():
+        request.user.profile.bookmarks.remove(prov_id)
+    else:
+        request.user.profile.bookmarks.add(prov_id)
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
 
 
 def template(request):
@@ -80,7 +78,7 @@ def template(request):
         name = request.GET.get('name')
         name += name
         print name
-        return HttpResponse(json.dumps({'name': name}), content_type="application/json")
+        return JsonResponse({'name': name})
     else:
         print u'Что-то пошло не так'
     return render(request, 'template.html')
